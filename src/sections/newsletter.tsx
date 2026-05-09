@@ -51,7 +51,7 @@ export default function Newsletter() {
               className="flex items-center justify-center gap-3 p-6 bg-primary/10 rounded-2xl text-primary font-medium"
             >
               <CheckCircle2 className="w-6 h-6" />
-              <span><Translate>Thank you! You're now subscribed to our newsletter.</Translate></span>
+              <span><Translate>Thank you! You&apos;re now subscribed to our newsletter.</Translate></span>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">

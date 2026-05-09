@@ -192,8 +192,8 @@ export default function ContactPage() {
                   </div>
                   <div className="space-y-3">
                     <Label htmlFor="category" className="text-xs font-bold uppercase tracking-widest text-muted-foreground"><Translate>Support Category</Translate></Label>
-                    <select id="category" required className="w-full h-14 rounded-2xl border-transparent bg-muted/30 px-4 py-2 text-sm shadow-sm focus-visible:outline-none focus:bg-background focus:border-primary transition-all ring-0 border border-transparent">
-                      <option value="" disabled selected>{t("Select a category")}</option>
+                    <select id="category" required defaultValue="" className="w-full h-14 rounded-2xl border-transparent bg-muted/30 px-4 py-2 text-sm shadow-sm focus-visible:outline-none focus:bg-background focus:border-primary transition-all ring-0 border border-transparent">
+                      <option value="" disabled>{t("Select a category")}</option>
                       <option value="donation">{t("Donation Help")}</option>
                       <option value="volunteer">{t("Volunteer Support")}</option>
                       <option value="campaign">{t("Campaign Information")}</option>
