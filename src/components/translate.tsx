@@ -26,6 +26,7 @@ export function Translate({ children, fallback }: TranslateProps) {
   useEffect(() => {
     // If the language is English, just use children
     if (language === "en") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTranslatedText(children);
       return;
     }
