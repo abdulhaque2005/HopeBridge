@@ -52,7 +52,7 @@ const SUGGESTED_QUESTIONS = [
 ];
 
 export function AiAssistant() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
