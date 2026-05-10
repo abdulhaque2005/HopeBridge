@@ -115,7 +115,7 @@ export function AiAssistant() {
         className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 text-white shadow-[0_10px_40px_-10px_rgba(16,185,129,0.5)] flex items-center justify-center transition-all ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : ''}`}
       >
         <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse" />
-        <BrainCircuit className="w-8 h-8 relative z-10" />
+        <img src="/images/help.png" alt="Hope AI" className="w-10 h-10 relative z-10 object-contain" />
         <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950" />
       </motion.button>
 
@@ -130,8 +130,8 @@ export function AiAssistant() {
           >
             <div className="flex items-center justify-between p-6 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-transparent border-b border-border/50">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 rotate-3">
-                  <BrainCircuit className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-emerald-500/10 rotate-3 overflow-hidden border border-border">
+                  <img src="/images/help.png" alt="Logo" className="w-9 h-9 object-contain" />
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
