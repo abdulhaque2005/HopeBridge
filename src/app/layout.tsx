@@ -7,6 +7,8 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { LanguageProvider } from "@/lib/language-provider";
 
+import { AiAssistant } from "@/components/ai-assistant";
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
@@ -41,6 +43,7 @@ export default function RootLayout({
                 {children}
               </main>
               <Footer />
+              <AiAssistant />
             </SmoothScroll>
           </LanguageProvider>
         </ThemeProvider>
