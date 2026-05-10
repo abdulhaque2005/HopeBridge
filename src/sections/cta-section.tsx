@@ -67,8 +67,7 @@ export default function CTASection() {
               </Button>
               <Button
                 size="lg"
-                variant="outline"
-                className="rounded-full h-14 px-10 text-base border-white/30 text-white hover:bg-white/15 backdrop-blur-sm hover:scale-[1.02] transition-all active:scale-95 font-bold"
+                className="rounded-full h-14 px-10 text-base bg-white/10 border border-white/30 text-white hover:bg-white/20 hover:text-white backdrop-blur-md hover:scale-[1.02] transition-all active:scale-95 font-bold shadow-lg"
                 render={<Link href="/contact" />}
               >
                 <Users className="mr-2 w-5 h-5" />

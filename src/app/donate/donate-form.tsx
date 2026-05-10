@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -34,13 +34,18 @@ const PRESET_AMOUNTS = [
 
 // Confetti particle component
 function ConfettiParticle({ index }: { index: number }) {
-  const { color, delay, x, rotation } = React.useMemo(() => {
+  const { color, delay, x, rotation } = useMemo(() => {
     const colors = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
+    // pseudo-random based on index to satisfy react-hooks/purity
+    const pseudoRandom = (seed: number) => {
+      const val = Math.sin(seed) * 10000;
+      return val - Math.floor(val);
+    };
     return {
       color: colors[index % colors.length],
-      delay: Math.random() * 0.5,
-      x: (Math.random() - 0.5) * 400,
-      rotation: Math.random() * 720 - 360
+      delay: pseudoRandom(index + 1) * 0.5,
+      x: (pseudoRandom(index + 2) - 0.5) * 400,
+      rotation: pseudoRandom(index + 3) * 720 - 360
     };
   }, [index]);
 
