@@ -26,15 +26,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}
-        suppressHydrationWarning
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          themes={['light', 'dark', 'emerald', 'ocean', 'sunset']}
-          enableColorScheme={false}
         >
           <LanguageProvider>
             <SmoothScroll>
