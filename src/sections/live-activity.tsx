@@ -1,26 +1,21 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, TrendingUp, HandHeart } from "lucide-react";
 import { Translate } from "@/components/translate";
-
 const INITIAL_DONATIONS = [
   { id: 1, name: "Arjun K.", amount: 5000, time: "2 minutes ago", program: "Education Support" },
   { id: 2, name: "Anonymous", amount: 1500, time: "5 minutes ago", program: "Emergency Medical Aid" },
   { id: 3, name: "Sarah M.", amount: 10000, time: "12 minutes ago", program: "Women Empowerment" },
 ];
-
 const NEW_DONATIONS = [
   { name: "Rahul S.", amount: 2500, program: "Rural Food Distribution" },
   { name: "Priya D.", amount: 1000, program: "Child Healthcare" },
   { name: "Anonymous", amount: 50000, program: "Flood Relief" },
   { name: "Neha W.", amount: 3000, program: "Education Support" },
 ];
-
 export default function LiveActivity() {
   const [donations, setDonations] = useState(INITIAL_DONATIONS);
-
   useEffect(() => {
     let count = 0;
     const interval = setInterval(() => {
@@ -31,22 +26,19 @@ export default function LiveActivity() {
             ...NEW_DONATIONS[count],
             time: "Just now"
           },
-          ...prev.slice(0, 4) // keep max 5
+          ...prev.slice(0, 4) 
         ]);
         count++;
       } else {
         clearInterval(interval);
       }
-    }, 15000); // Add a new donation every 15 seconds
-
+    }, 15000); 
     return () => clearInterval(interval);
   }, []);
-
   return (
     <section className="py-24 bg-muted/20 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="flex flex-col md:flex-row gap-12 items-center">
-          
           <div className="w-full md:w-1/2 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm">
               <span className="relative flex h-3 w-3">
@@ -73,12 +65,10 @@ export default function LiveActivity() {
               </div>
             </div>
           </div>
-
           <div className="w-full md:w-1/2">
             <div className="bg-background border border-border shadow-xl rounded-3xl p-6 h-[400px] overflow-hidden relative">
               <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-background to-transparent z-10"></div>
               <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent z-10"></div>
-              
               <div className="space-y-4 pt-4">
                 <AnimatePresence initial={false}>
                   {donations.map((donation) => (
@@ -110,7 +100,6 @@ export default function LiveActivity() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

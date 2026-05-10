@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import { Check, ChevronDown, Globe, Search } from "lucide-react";
 import { 
@@ -15,17 +14,14 @@ import { useLanguage } from "@/lib/language-provider";
 import { LANGUAGES } from "@/lib/languages";
 import { buttonVariants } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-
 export function LanguageSelector() {
   const { language, setLanguage, currentLanguageConfig, t } = useLanguage();
   const [searchQuery, setSearchQuery] = React.useState("");
-
   const filteredLanguages = LANGUAGES.filter(
     (l) => 
       l.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
       l.nativeName.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={cn(
@@ -36,14 +32,12 @@ export function LanguageSelector() {
         <span className="hidden sm:inline">{currentLanguageConfig?.nativeName || "Language"}</span>
         <ChevronDown className="h-3 w-3 opacity-50" />
       </DropdownMenuTrigger>
-      
       <DropdownMenuContent align="end" className="w-72 p-2 rounded-[2rem] border-border/50 bg-background/80 backdrop-blur-2xl shadow-2xl animate-in fade-in-0 zoom-in-95">
         <div className="p-1.5 space-y-1.5">
           <div className="flex items-center justify-between px-1">
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{t("Select Language")}</p>
             <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">{LANGUAGES.length}</span>
           </div>
-          
           <div className="relative group">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
@@ -54,9 +48,7 @@ export function LanguageSelector() {
             />
           </div>
         </div>
-        
         <DropdownMenuSeparator className="mx-2 opacity-50" />
-        
         <div className="max-h-[250px] overflow-y-auto px-1 py-1 custom-scrollbar">
           <AnimatePresence mode="popLayout">
             {filteredLanguages.length > 0 ? (
@@ -97,9 +89,7 @@ export function LanguageSelector() {
             )}
           </AnimatePresence>
         </div>
-        
         <DropdownMenuSeparator className="mx-2 opacity-50" />
-        
         <div className="p-2 text-[9px] text-center text-muted-foreground font-medium flex items-center justify-center gap-2">
           <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
           {t("Global Multi-Language Supported")}

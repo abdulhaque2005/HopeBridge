@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
 @custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -47,7 +45,6 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 }
-
 :root {
   --background: oklch(0.99 0.005 160);
   --foreground: oklch(0.2 0.02 160);
@@ -69,7 +66,6 @@
   --ring: oklch(0.45 0.12 160);
   --radius: 1rem;
 }
-
 .dark {
   --background: oklch(0.13 0.015 160);
   --foreground: oklch(0.98 0.01 160);
@@ -90,7 +86,6 @@
   --input: oklch(0.28 0.03 160);
   --ring: oklch(0.72 0.14 160);
 }
-
 .natural {
   --background: oklch(0.97 0.01 60);
   --foreground: oklch(0.25 0.03 60);
@@ -104,7 +99,6 @@
   --input: oklch(0.88 0.03 60);
   --ring: oklch(0.4 0.08 60);
 }
-
 .emerald {
   --background: oklch(0.98 0.015 160);
   --foreground: oklch(0.2 0.05 160);
@@ -118,7 +112,6 @@
   --input: oklch(0.9 0.05 160);
   --ring: oklch(0.5 0.15 160);
 }
-
 .ocean {
   --background: oklch(0.98 0.02 240);
   --foreground: oklch(0.2 0.06 240);
@@ -132,7 +125,6 @@
   --input: oklch(0.9 0.06 240);
   --ring: oklch(0.45 0.2 240);
 }
-
 .sunset {
   --background: oklch(0.98 0.02 40);
   --foreground: oklch(0.2 0.06 40);
@@ -146,8 +138,6 @@
   --input: oklch(0.9 0.06 40);
   --ring: oklch(0.55 0.2 40);
 }
-
-/* ===== Base Styles ===== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -159,8 +149,6 @@
     @apply font-sans scroll-smooth;
   }
 }
-
-/* ===== Premium Theme Transitions ===== */
 html,
 html *,
 html *::before,
@@ -169,66 +157,53 @@ html *::after {
   transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* ===== Premium Animations ===== */
 @keyframes blob {
   0%, 100% { transform: translate(0, 0) scale(1); }
   25% { transform: translate(30px, -50px) scale(1.1); }
   50% { transform: translate(-20px, 20px) scale(0.9); }
   75% { transform: translate(20px, 40px) scale(1.05); }
 }
-
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
 }
-
 @keyframes float-slow {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-10px) rotate(2deg); }
 }
-
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
-
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(var(--primary), 0.1); }
   50% { box-shadow: 0 0 40px rgba(var(--primary), 0.3); }
 }
-
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes scale-in {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
-
 @keyframes slide-in-right {
   from { opacity: 0; transform: translateX(20px); }
   to { opacity: 1; transform: translateX(0); }
 }
-
 @keyframes celebrate {
   0% { transform: scale(0) rotate(0deg); opacity: 0; }
   50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
   100% { transform: scale(1) rotate(360deg); opacity: 1; }
 }
-
 @keyframes confetti-fall {
   0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
-
 @keyframes heartbeat {
   0%, 100% { transform: scale(1); }
   14% { transform: scale(1.3); }
@@ -236,102 +211,76 @@ html *::after {
   42% { transform: scale(1.3); }
   70% { transform: scale(1); }
 }
-
-/* ===== Animation Utilities ===== */
 .animate-blob {
   animation: blob 7s infinite;
 }
-
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
-
 .animate-float-slow {
   animation: float-slow 8s ease-in-out infinite;
 }
-
 .animate-shimmer {
   background-size: 200% 100%;
   animation: shimmer 2s linear infinite;
 }
-
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient-shift 4s ease infinite;
 }
-
 .animate-celebrate {
   animation: celebrate 0.6s ease-out forwards;
 }
-
 .animate-heartbeat {
   animation: heartbeat 1.5s ease-in-out infinite;
 }
-
 .animation-delay-2000 {
   animation-delay: 2000ms;
 }
-
 .animation-delay-4000 {
   animation-delay: 4000ms;
 }
-
-/* ===== Glassmorphism Utilities ===== */
 .glass {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .glass-card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
-
-/* ===== Premium Scrollbar ===== */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 100px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
 }
-
-/* ===== Focus Styles ===== */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
   border-radius: 4px;
 }
-
-/* ===== Selection Color ===== */
 ::selection {
   background-color: var(--primary);
   color: var(--primary-foreground);
 }
-
-/* ===== Smooth Image Loading ===== */
 img {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 img[loading="lazy"] {
   opacity: 0;
 }
-
 img[loading="lazy"].loaded {
   opacity: 1;
 }

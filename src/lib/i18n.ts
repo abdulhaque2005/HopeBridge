@@ -222,59 +222,35 @@ export const COMMON_TRANSLATIONS: Record<string, Record<string, string>> = {
     help_text: "ہمیں بتائیں کہ ہم کیسے مدد کر سکتے ہیں...",
   }
 };
-
-/**
- * A smart AI-powered translation utility.
- * Uses a hybrid approach:
- * 1. Matches against the high-quality static dictionary.
- * 2. Uses the MyMemory Translation API for real-time dynamic translation.
- */
 export async function dynamicTranslate(text: string, targetLang: string): Promise<string> {
   if (!text || targetLang === "en") return text;
-
-  // 1. Check for perfect matches in our curated dictionary
   const langTable = COMMON_TRANSLATIONS[targetLang];
   if (langTable) {
-    // Check if the text matches any English value to find the key
     const key = Object.keys(COMMON_TRANSLATIONS.en).find(
       (k) => COMMON_TRANSLATIONS.en[k].toLowerCase() === text.trim().toLowerCase()
     );
     if (key && langTable[key]) return langTable[key];
-    
-    // Check if the text itself IS the key (for safety)
     if (langTable[text]) return langTable[text];
   }
-
-  // 2. Real-time API Translation (Simulated AI experience)
   try {
-    // MyMemory API provides reliable free translations for demo purposes
     const response = await fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${targetLang}`
     );
     const data = await response.json();
-    
     if (data.responseData && data.responseData.translatedText) {
       const translated = data.responseData.translatedText;
-      
-      // Filter out MyMemory API warnings/limit messages
       if (translated.toUpperCase().includes("MYMEMORY WARNING") || 
           translated.toUpperCase().includes("YOU USED ALL AVAILABLE FREE TRANSLATIONS")) {
         console.warn("[HopeBridge-AI] API Limit reached, using fallback.");
         return await handleFallback(text, targetLang);
       }
-      
       return translated;
     }
   } catch (error) {
     console.error("[HopeBridge-AI] Translation API error:", error);
   }
-
   return await handleFallback(text, targetLang);
 }
-
-/**
- * Helper to manage fallbacks when API is unavailable or limited
- */
 async function handleFallback(text: string, targetLang: string): Promise<string> {
   const commonMap: Record<string, Record<string, string>> = {
     "Donate": { hi: "दान पुण्य करें", gu: "દાન કરો", ur: "عطیہ کریں" },
@@ -290,11 +266,9 @@ async function handleFallback(text: string, targetLang: string): Promise<string>
     "Map location": { hi: "मानचित्र स्थान", gu: "નકશા સ્થાન", ur: "نقشہ کا مقام" },
     "Tell us how we can help...": { hi: "बताएं हम आपकी कैसे मदद कर सकते हैं...", gu: "અમને કહો કે અમે કેવી રીતે મદદ કરી શકીએ...", ur: "ہمیں بتائیں کہ ہم کیسے مدد کر سکتے ہیں..." },
   };
-
   const normalizedText = text.trim();
   if (commonMap[normalizedText] && commonMap[normalizedText][targetLang]) {
     return commonMap[normalizedText][targetLang];
   }
-
   return text; 
 }

@@ -1,11 +1,9 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Translate } from "@/components/translate";
-
 const testimonials = [
   {
     id: 1,
@@ -62,28 +60,23 @@ const testimonials = [
     text: "Being a volunteer with HopeBridge has changed my life. Seeing the smiles on children's faces when they receive school supplies is priceless. This organization truly walks the talk.",
   },
 ];
-
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % testimonials.length);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
-
   const prev = () =>
     setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
   const next = () => setCurrent((c) => (c + 1) % testimonials.length);
-
   return (
     <section className="py-28 bg-background relative overflow-hidden">
-      {/* Decorative */}
+      {}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-primary/5 rounded-full blur-[120px] -z-10" />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -109,8 +102,7 @@ export default function Testimonials() {
             </Translate>
           </motion.p>
         </div>
-
-        {/* Carousel */}
+        {}
         <div className="max-w-4xl mx-auto relative">
           <AnimatePresence mode="wait">
             <motion.div
@@ -121,12 +113,11 @@ export default function Testimonials() {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="bg-background border border-border rounded-[2.5rem] shadow-2xl shadow-primary/5 p-8 sm:p-10 md:p-14 text-center relative overflow-hidden">
-                {/* Quote icon background */}
+                {}
                 <div className="absolute top-6 right-8 opacity-5">
                   <Quote className="w-32 h-32 text-primary" />
                 </div>
-
-                {/* Stars */}
+                {}
                 <div className="flex justify-center mb-6 gap-1">
                   {Array.from({
                     length: testimonials[current].rating,
@@ -137,15 +128,13 @@ export default function Testimonials() {
                     />
                   ))}
                 </div>
-
-                {/* Testimonial Text */}
+                {}
                 <p className="text-lg sm:text-xl md:text-2xl text-foreground leading-relaxed mb-10 italic font-medium max-w-3xl mx-auto">
                   &ldquo;
                   <Translate>{testimonials[current].text}</Translate>
                   &rdquo;
                 </p>
-
-                {/* Author */}
+                {}
                 <div className="flex flex-col items-center gap-4">
                   <img
                     src={testimonials[current].avatar}
@@ -167,8 +156,7 @@ export default function Testimonials() {
               </div>
             </motion.div>
           </AnimatePresence>
-
-          {/* Controls */}
+          {}
           <div className="flex items-center justify-center gap-6 mt-10">
             <Button
               variant="outline"
@@ -178,8 +166,7 @@ export default function Testimonials() {
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
-
-            {/* Indicators */}
+            {}
             <div className="flex gap-2">
               {testimonials.map((_, i) => (
                 <button
@@ -193,7 +180,6 @@ export default function Testimonials() {
                 />
               ))}
             </div>
-
             <Button
               variant="outline"
               size="icon"

@@ -1,19 +1,16 @@
 "use client";
-
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Lock, HeartHandshake, Sparkles, Heart, ArrowLeft } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/language-provider";
 import { Translate } from "@/components/translate";
-
 const donationSchema = z.object({
   amount: z.number().min(1, "Amount must be at least 1"),
   isMonthly: z.boolean(),
@@ -24,19 +21,15 @@ const donationSchema = z.object({
   message: z.string().optional(),
   isAnonymous: z.boolean(),
 });
-
 const PRESET_AMOUNTS = [
   { value: 500, impact: "Feeds 5 children for a week" },
   { value: 1500, impact: "School supplies for 2 students" },
   { value: 5000, impact: "Emergency healthcare for a family" },
   { value: 10000, impact: "Funds a woman's micro-business" },
 ];
-
-// Confetti particle component
 function ConfettiParticle({ index }: { index: number }) {
   const { color, delay, x, rotation } = useMemo(() => {
     const colors = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
-    // pseudo-random based on index to satisfy react-hooks/purity
     const pseudoRandom = (seed: number) => {
       const val = Math.sin(seed) * 10000;
       return val - Math.floor(val);
@@ -48,7 +41,6 @@ function ConfettiParticle({ index }: { index: number }) {
       rotation: pseudoRandom(index + 3) * 720 - 360
     };
   }, [index]);
-
   return (
     <motion.div
       initial={{ y: 0, x: 0, opacity: 1, rotate: 0, scale: 1 }}
@@ -69,14 +61,12 @@ function ConfettiParticle({ index }: { index: number }) {
     />
   );
 }
-
 export default function DonateForm() {
   const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [customAmount, setCustomAmount] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
-
   const form = useForm<z.infer<typeof donationSchema>>({
     resolver: zodResolver(donationSchema),
     defaultValues: {
@@ -90,24 +80,19 @@ export default function DonateForm() {
       isAnonymous: false,
     },
   });
-
   const amount = form.watch("amount");
   const isMonthly = form.watch("isMonthly");
-
   const currentImpact =
     PRESET_AMOUNTS.find((p) => p.value === amount)?.impact ||
     (amount >= 5000
       ? "Creates massive community impact"
       : "Helps provide essential support");
-
   const onSubmit = async () => {
     setStep(3);
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setShowConfetti(true);
     setIsSuccess(true);
   };
-
-  // Success Screen with Celebration
   if (isSuccess) {
     return (
       <motion.div
@@ -116,7 +101,6 @@ export default function DonateForm() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="text-center py-12 space-y-6 relative overflow-hidden"
       >
-        {/* Confetti */}
         {showConfetti && (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
             {Array.from({ length: 30 }).map((_, i) => (
@@ -124,24 +108,21 @@ export default function DonateForm() {
             ))}
           </div>
         )}
-
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          transition={{ delay: 0.2, type: "spring" as const, stiffness: 200 }}
           className="w-28 h-28 bg-gradient-to-br from-primary/20 to-emerald-500/20 rounded-full flex items-center justify-center mx-auto relative"
         >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
+            transition={{ delay: 0.4, type: "spring" as const, stiffness: 300 }}
           >
             <HeartHandshake className="w-14 h-14 text-primary" />
           </motion.div>
-          {/* Pulse ring */}
           <div className="absolute inset-0 rounded-full border-2 border-primary/30 animate-ping" />
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -164,8 +145,6 @@ export default function DonateForm() {
           <p className="text-muted-foreground mb-8">
             <Translate>will make a real difference in someone&apos;s life.</Translate>
           </p>
-
-          {/* Impact Summary */}
           <div className="bg-primary/5 border border-primary/10 rounded-2xl p-5 mb-8 max-w-sm mx-auto">
             <div className="flex items-center gap-3">
               <div className="bg-primary/10 p-2 rounded-xl">
@@ -181,7 +160,6 @@ export default function DonateForm() {
               </div>
             </div>
           </div>
-
           <Button
             onClick={() => window.location.reload()}
             variant="outline"
@@ -194,10 +172,8 @@ export default function DonateForm() {
       </motion.div>
     );
   }
-
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-      {/* Step indicator */}
       <div className="flex items-center gap-2 mb-2">
         {[1, 2].map((s) => (
           <div key={s} className="flex items-center gap-2">
@@ -225,8 +201,6 @@ export default function DonateForm() {
           {step === 1 ? <Translate>Choose Amount</Translate> : <Translate>Your Details</Translate>}
         </span>
       </div>
-
-      {/* One-time / Monthly Toggle */}
       <div className="flex bg-muted p-1.5 rounded-full relative">
         <button
           type="button"
@@ -258,10 +232,9 @@ export default function DonateForm() {
         <motion.div
           className="absolute inset-1.5 w-[calc(50%-6px)] bg-background rounded-full shadow-md border border-border/50"
           animate={{ x: isMonthly ? "calc(100% + 6px)" : "0%" }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
         />
       </div>
-
       <AnimatePresence mode="wait">
         {step === 1 && (
           <motion.div
@@ -301,7 +274,6 @@ export default function DonateForm() {
                     )}>
                       <Translate>{preset.impact}</Translate>
                     </p>
-                    {/* Hover glow */}
                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
                 ))}
@@ -328,8 +300,6 @@ export default function DonateForm() {
                 />
               </div>
             </div>
-
-            {/* Impact Preview */}
             <motion.div
               key={currentImpact}
               initial={{ opacity: 0, y: 10 }}
@@ -348,7 +318,6 @@ export default function DonateForm() {
                 </p>
               </div>
             </motion.div>
-
             <Button
               type="button"
               size="lg"
@@ -359,7 +328,6 @@ export default function DonateForm() {
             </Button>
           </motion.div>
         )}
-
         {step === 2 && (
           <motion.div
             key="step2"
@@ -382,7 +350,6 @@ export default function DonateForm() {
                 ₹{amount.toLocaleString()} {isMonthly && <span className="text-xs opacity-70">/<Translate>month</Translate></span>}
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label
@@ -423,7 +390,6 @@ export default function DonateForm() {
                 )}
               </div>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label
@@ -466,7 +432,6 @@ export default function DonateForm() {
                 )}
               </div>
             </div>
-
             <div className="space-y-2">
               <Label
                 htmlFor="message"
@@ -481,7 +446,6 @@ export default function DonateForm() {
                 className="h-12 rounded-xl border-border bg-muted/30 focus:bg-background focus:border-primary transition-all"
               />
             </div>
-
             <div className="flex items-center space-x-3 pt-2 bg-muted/30 p-4 rounded-2xl border border-border/50">
               <input
                 type="checkbox"
@@ -496,14 +460,12 @@ export default function DonateForm() {
                 <Translate>Make this donation anonymous</Translate>
               </Label>
             </div>
-
             <div className="flex items-center gap-2 text-[10px] text-muted-foreground justify-center pt-2 uppercase font-bold tracking-widest">
               <Lock className="w-3 h-3" />
               <span>
                 <Translate>Secure, encrypted payment processing</Translate>
               </span>
             </div>
-
             <Button
               type="submit"
               size="lg"
@@ -515,7 +477,6 @@ export default function DonateForm() {
             </Button>
           </motion.div>
         )}
-
         {step === 3 && (
           <motion.div
             key="step3"

@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 import { Program } from "@/data/programs";
 import { Button } from "@/components/ui/button";
@@ -10,14 +9,12 @@ import Link from "next/link";
 import { Heart, Share2, Users, Calendar, Target, CheckCircle2, MapPin, TrendingUp, HandHeart } from "lucide-react";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 export default function ProgramDetailClient({ program }: { program: Program }) {
   const { t } = useLanguage();
   const progress = (program.raised / program.goal) * 100;
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Banner */}
+      {}
       <div className="relative h-[50vh] md:h-[60vh] min-h-[400px] w-full">
         <img
           src={program.image}
@@ -26,9 +23,8 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
-        
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -52,12 +48,10 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
           </div>
         </div>
       </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-5xl">
-        <div className="grid lg:grid-cols-3 gap-12 items-start">
-          
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-6xl">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {}
+          <div className="lg:col-span-7 space-y-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,7 +65,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                 <Translate>{program.longDescription}</Translate>
               </div>
             </motion.div>
-
             {program.impactStatistics && program.impactStatistics.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -92,7 +85,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                 ))}
               </motion.div>
             )}
-
             {program.beneficiaryImages && program.beneficiaryImages.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -108,7 +100,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                 ))}
               </motion.div>
             )}
-
             {program.volunteerSupportDetails && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -133,7 +124,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                 </div>
               </motion.div>
             )}
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -158,17 +148,15 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
               </Accordion>
             </motion.div>
           </div>
-
-          {/* Sticky Sidebar */}
+          {}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="lg:sticky lg:top-24 space-y-6"
+            className="lg:sticky lg:top-24 lg:col-span-5 space-y-6"
           >
             <div className="bg-background/95 backdrop-blur-xl rounded-[2.5rem] p-8 border-2 border-emerald-500/20 shadow-2xl shadow-emerald-500/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none" />
-              
               <div className="space-y-8 relative z-10">
                 <div>
                   <div className="flex justify-between items-end mb-3">
@@ -181,7 +169,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                   </div>
                   <Progress value={progress} className="h-3 bg-emerald-500/10" indicatorClassName="bg-emerald-500" />
                 </div>
-
                 <div className="grid grid-cols-2 gap-4 py-6 border-y border-border/50">
                   <div className="flex items-center gap-3">
                     <div className="bg-emerald-500/10 p-3 rounded-2xl text-emerald-600 dark:text-emerald-400">
@@ -202,7 +189,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                     </div>
                   </div>
                 </div>
-
                 <div className="space-y-4">
                   <Button size="lg" className="w-full rounded-full h-16 text-xl font-black bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 bg-[length:200%_100%] animate-gradient text-white shadow-[0_0_30px_-5px_rgba(16,185,129,0.5)] hover:shadow-[0_0_40px_-5px_rgba(16,185,129,0.8)] hover:-translate-y-1 transition-all duration-300 group" render={<Link href={`/donate?program=${program.id}`} />}>
                     <Translate>Donate Now</Translate>
@@ -214,7 +200,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                 </div>
               </div>
             </div>
-
             <div className="bg-muted/50 rounded-[2.5rem] p-8 border border-border/50">
               <h3 className="font-bold flex items-center gap-2 mb-6 text-foreground/80 text-sm uppercase tracking-widest">
                 <Target className="w-5 h-5 text-primary" />
@@ -234,7 +219,6 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
               </ul>
             </div>
           </motion.div>
-
         </div>
       </div>
     </div>

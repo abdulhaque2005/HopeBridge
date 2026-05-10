@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,20 +16,17 @@ import {
 import { useLanguage } from "@/lib/language-provider";
 import { LanguageSelector } from "./language-selector";
 import { ThemeSelector } from "./theme-selector";
-
 const NAV_LINKS = [
   { name: "nav_home", href: "/" },
   { name: "nav_programs", href: "/programs" },
   { name: "nav_about", href: "/about" },
   { name: "nav_contact", href: "/contact" },
 ];
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useLanguage();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
-
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -38,7 +34,6 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   return (
     <header
       className={cn(
@@ -60,8 +55,7 @@ export default function Navbar() {
               </span>
             </Link>
           </div>
-
-          {/* Desktop Nav */}
+          {}
           <nav className="hidden lg:flex items-center space-x-1 bg-muted/30 p-1 rounded-full border border-border/40">
             {NAV_LINKS.map((link) => (
               <Link
@@ -81,19 +75,15 @@ export default function Navbar() {
               </Link>
             ))}
           </nav>
-
           <div className="hidden md:flex items-center gap-2">
             <ThemeSelector />
             <LanguageSelector />
-            
             <div className="w-px h-6 bg-border mx-2" />
-
             <Button className="rounded-full px-7 h-10 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95" render={<Link href="/donate" />}>
               {t("nav_donate")}
             </Button>
           </div>
-
-          {/* Mobile menu controls */}
+          {}
           <div className="md:hidden flex items-center gap-2">
             <LanguageSelector />
             <Button
@@ -107,8 +97,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
-      {/* Mobile Nav */}
+      {}
       <AnimatePresence>
         {isOpen && (
           <motion.div

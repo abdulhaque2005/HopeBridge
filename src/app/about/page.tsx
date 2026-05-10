@@ -1,34 +1,28 @@
 "use client";
-
 import { motion } from "framer-motion";
 import ImpactChart from "./impact-chart";
 import { CheckCircle2, Users, Target, ShieldCheck, Globe, Award, TrendingUp, Heart } from "lucide-react";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 const team = [
   { name: "Dr. Elena Rostova", role: "Executive Director", image: "https://i.pravatar.cc/150?img=44" },
   { name: "Marcus Chen", role: "Head of Operations", image: "https://i.pravatar.cc/150?img=11" },
   { name: "Sarah Jenkins", role: "Field Director", image: "https://i.pravatar.cc/150?img=5" },
   { name: "Ahmed Al-Fayed", role: "Financial Controller", image: "https://i.pravatar.cc/150?img=60" },
 ];
-
 const partners = [
   "UNICEF", "Red Cross", "World Food Programme", "WHO", "Save the Children", "UNDP"
 ];
-
 const transparencyStats = [
   { label: "Program Spending", value: "90%", description: "Goes directly to field operations", icon: Target },
   { label: "Admin Costs", value: "7%", description: "Essential operational overhead", icon: TrendingUp },
   { label: "Fundraising", value: "3%", description: "To grow our reach", icon: Globe },
 ];
-
 export default function AboutPage() {
   const { t } = useLanguage();
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
+      {}
       <div className="bg-gradient-to-b from-primary/5 to-transparent py-24 md:py-32 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-500/10 rounded-full blur-[120px]" />
@@ -61,9 +55,8 @@ export default function AboutPage() {
           </motion.p>
         </div>
       </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        {/* Mission & Vision */}
+        {}
         <div className="grid md:grid-cols-2 gap-16 lg:gap-24 mb-32 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -118,8 +111,7 @@ export default function AboutPage() {
             </div>
           </motion.div>
         </div>
-
-        {/* Transparency Dashboard */}
+        {}
         <div className="mb-32">
           <div className="text-center mb-16">
             <motion.div
@@ -136,7 +128,6 @@ export default function AboutPage() {
               <Translate>We believe in complete financial transparency. Here&apos;s exactly how we use every rupee donated.</Translate>
             </p>
           </div>
-
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             {transparencyStats.map((stat, i) => (
               <motion.div
@@ -157,8 +148,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-
-        {/* History / Timeline */}
+        {}
         <div className="mb-32">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-bold font-heading mb-4"><Translate>Our Journey</Translate></h2>
@@ -191,8 +181,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-
-        {/* Impact Dashboard */}
+        {}
         <div className="mb-32">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-heading mb-4"><Translate>Our Growth & Impact</Translate></h2>
@@ -204,8 +193,7 @@ export default function AboutPage() {
             <ImpactChart />
           </div>
         </div>
-
-        {/* Partner Organizations */}
+        {}
         <div className="mb-32">
           <div className="text-center mb-16">
             <div className="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-6">
@@ -229,8 +217,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-
-        {/* Team Section */}
+        {}
         <div className="pb-12">
           <div className="text-center mb-16">
             <div className="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-6">

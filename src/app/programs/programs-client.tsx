@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -12,12 +11,10 @@ import { ArrowRight, Search, Filter } from "lucide-react";
 import { programs, categories } from "@/data/programs";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 export default function ProgramsPageClient() {
   const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-
   const filteredPrograms = programs.filter((program) => {
     const matchesCategory = activeCategory === "All" || program.category === activeCategory;
     const matchesSearch =
@@ -25,10 +22,9 @@ export default function ProgramsPageClient() {
       program.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-
   return (
     <div className="min-h-screen bg-muted/20">
-      {/* Header Banner */}
+      {}
       <div className="bg-gradient-to-b from-primary/5 to-transparent py-24 relative overflow-hidden border-b">
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] -z-10" />
@@ -48,8 +44,7 @@ export default function ProgramsPageClient() {
           >
             <Translate>We operate across multiple sectors to provide holistic support. Every program is designed for sustainable, long-term impact.</Translate>
           </motion.p>
-
-          {/* Search */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -67,10 +62,9 @@ export default function ProgramsPageClient() {
           </motion.div>
         </div>
       </div>
-
-      {/* Filters & Programs */}
+      {}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Category Filter */}
+        {}
         <div className="flex flex-wrap gap-2 mb-12 justify-center">
           {categories.map((cat) => (
             <button
@@ -86,8 +80,7 @@ export default function ProgramsPageClient() {
             </button>
           ))}
         </div>
-
-        {/* Programs Grid */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPrograms.map((program, index) => {
             const progress = (program.raised / program.goal) * 100;
@@ -150,7 +143,6 @@ export default function ProgramsPageClient() {
             );
           })}
         </div>
-
         {filteredPrograms.length === 0 && (
           <div className="text-center py-20 bg-background rounded-[3rem] border border-dashed border-border mt-12">
             <Filter className="w-16 h-16 text-muted-foreground mx-auto mb-6 opacity-20" />

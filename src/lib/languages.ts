@@ -4,7 +4,6 @@ export interface LanguageConfig {
   nativeName: string;
   dir: "ltr" | "rtl";
 }
-
 export const LANGUAGES: LanguageConfig[] = [
   { code: "en", name: "English", nativeName: "English", dir: "ltr" },
   { code: "hi", name: "Hindi", nativeName: "हिन्दी", dir: "ltr" },
@@ -32,5 +31,4 @@ export const LANGUAGES: LanguageConfig[] = [
   { code: "fa", name: "Persian", nativeName: "فارسی", dir: "rtl" },
   { code: "vi", name: "Vietnamese", nativeName: "Tiếng Việt", dir: "ltr" },
 ];
-
 export const DEFAULT_LANGUAGE = "en";

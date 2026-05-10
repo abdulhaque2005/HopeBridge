@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Send, CheckCircle2 } from "lucide-react";
@@ -9,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 function FacebookIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,7 +15,6 @@ function FacebookIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function TwitterIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -25,7 +22,6 @@ function TwitterIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -35,7 +31,6 @@ function InstagramIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function LinkedinIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -45,16 +40,13 @@ function LinkedinIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const { t } = useLanguage();
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
-
   return (
     <div className="min-h-screen bg-muted/20 py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -75,9 +67,8 @@ export default function ContactPage() {
             <Translate>Have questions about our programs, volunteering, or donations? Our team is here to help you make a difference.</Translate>
           </motion.p>
         </div>
-
         <div className="grid lg:grid-cols-5 gap-12">
-          {/* Contact Info */}
+          {}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -86,7 +77,6 @@ export default function ContactPage() {
             <div className="bg-primary text-primary-foreground p-8 md:p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 transition-transform duration-700 group-hover:scale-110" />
               <h3 className="text-2xl font-bold font-heading mb-8 relative z-10"><Translate>Contact Information</Translate></h3>
-              
               <div className="space-y-8 relative z-10">
                 <div className="flex items-start gap-4 group/item">
                   <div className="bg-white/10 p-3 rounded-2xl group-hover/item:scale-110 transition-transform">
@@ -99,7 +89,6 @@ export default function ContactPage() {
                     </p>
                   </div>
                 </div>
-                
                 <div className="flex items-center gap-4 group/item">
                   <div className="bg-white/10 p-3 rounded-2xl group-hover/item:scale-110 transition-transform">
                     <Phone className="w-6 h-6 shrink-0 text-white" />
@@ -109,7 +98,6 @@ export default function ContactPage() {
                     <p className="text-primary-foreground/80 font-medium">+91 (555) 123-4567</p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-4 group/item">
                   <div className="bg-white/10 p-3 rounded-2xl group-hover/item:scale-110 transition-transform">
                     <Mail className="w-6 h-6 shrink-0 text-white" />
@@ -128,8 +116,7 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-            
-            {/* Simple Map Placeholder */}
+            {}
             <div className="h-56 bg-background rounded-[2.5rem] overflow-hidden relative border border-border shadow-lg group">
                <img 
                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
@@ -143,8 +130,7 @@ export default function ContactPage() {
                </div>
             </div>
           </motion.div>
-
-          {/* Contact Form */}
+          {}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -173,7 +159,6 @@ export default function ContactPage() {
                   <div className="w-1.5 h-8 bg-primary rounded-full" />
                   <Translate>Send us a message</Translate>
                 </h3>
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <Label htmlFor="fullName" className="text-xs font-bold uppercase tracking-widest text-muted-foreground"><Translate>Full Name</Translate></Label>
@@ -184,7 +169,6 @@ export default function ContactPage() {
                     <Input id="email" type="email" required className="h-14 rounded-2xl bg-muted/30 border-transparent focus:bg-background focus:border-primary transition-all" />
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <Label htmlFor="phone" className="text-xs font-bold uppercase tracking-widest text-muted-foreground"><Translate>Phone Number</Translate></Label>
@@ -201,12 +185,10 @@ export default function ContactPage() {
                     </select>
                   </div>
                 </div>
-
                 <div className="space-y-3">
                   <Label htmlFor="subject" className="text-xs font-bold uppercase tracking-widest text-muted-foreground"><Translate>Subject</Translate></Label>
                   <Input id="subject" required className="h-14 rounded-2xl bg-muted/30 border-transparent focus:bg-background focus:border-primary transition-all" />
                 </div>
-
                 <div className="space-y-3">
                   <Label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-muted-foreground"><Translate>Message</Translate></Label>
                   <textarea 
@@ -217,7 +199,6 @@ export default function ContactPage() {
                     className="w-full rounded-[2rem] border-transparent bg-muted/30 px-4 py-4 text-sm shadow-sm focus-visible:outline-none focus:bg-background focus:border-primary transition-all ring-0 border border-transparent"
                   ></textarea>
                 </div>
-
                 <Button type="submit" size="lg" className="w-full rounded-full h-16 text-lg font-bold shadow-xl shadow-primary/20 hover:shadow-primary/30 active:scale-[0.98] transition-all">
                   <Translate>Send Message</Translate> <Send className="ml-2 w-5 h-5" />
                 </Button>
@@ -225,8 +206,7 @@ export default function ContactPage() {
             )}
           </motion.div>
         </div>
-
-        {/* FAQ Section */}
+        {}
         <div className="mt-32 max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4"><Translate>Frequently Asked Questions</Translate></h2>

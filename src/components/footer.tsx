@@ -1,12 +1,10 @@
 "use client";
-
 import Link from "next/link";
 import { Heart, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 function FacebookIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -14,7 +12,6 @@ function FacebookIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function XIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -23,7 +20,6 @@ function XIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -33,7 +29,6 @@ function InstagramIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function LinkedinIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,15 +38,13 @@ function LinkedinIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 export default function Footer() {
   const { t } = useLanguage();
-
   return (
     <footer className="bg-muted/50 border-t pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand & Mission */}
+          {}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
               <div className="bg-primary/10 p-2 rounded-xl">
@@ -77,8 +70,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-
-          {/* Quick Links */}
+          {}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground"><Translate>Quick Links</Translate></h3>
             <ul className="space-y-3 text-sm">
@@ -96,8 +88,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Contact Info */}
+          {}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground"><Translate>contact_us</Translate></h3>
             <ul className="space-y-4 text-sm">
@@ -115,8 +106,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Newsletter */}
+          {}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground"><Translate>Newsletter</Translate></h3>
             <p className="text-sm text-muted-foreground">
@@ -135,7 +125,6 @@ export default function Footer() {
             </form>
           </div>
         </div>
-
         <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} HopeBridge Foundation. <Translate>all_rights_reserved</Translate></p>
           <div className="flex gap-6">

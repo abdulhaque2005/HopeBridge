@@ -34,7 +34,6 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-zinc-900 pt-16">
-      {/* Background Image Slider */}
       <div className="absolute inset-0 z-0">
         {HERO_IMAGES.map((src, index) => (
           <motion.div
@@ -58,12 +57,10 @@ export default function HeroSection() {
             />
           </motion.div>
         ))}
-        {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-black/10 z-20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-20" />
       </div>
 
-      {/* Floating Stats Card - Top Right */}
       <motion.div
         initial={{ x: 20, y: 0, opacity: 0 }}
         animate={{ x: 0, y: [0, 5, 0], opacity: 1 }}
@@ -80,14 +77,13 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Floating Impact Card - Bottom Right */}
       <motion.div
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: [0, -8, 0], opacity: 1 }}
         transition={{ 
           y: { duration: 6, ease: "easeInOut", repeat: Infinity, delay: 1.5 },
           opacity: { delay: 1, duration: 0.6 } 
-        }}
+         }}
         className="absolute bottom-12 right-6 z-30 glass p-6 rounded-2xl text-white hidden lg:block border border-white/10"
       >
         <div className="flex items-center justify-between gap-8">
@@ -111,7 +107,6 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Main Content Overlay on Left Side */}
       <div className="container relative z-30 mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -119,7 +114,6 @@ export default function HeroSection() {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -133,7 +127,6 @@ export default function HeroSection() {
             <Translate>Join our mission to save lives</Translate>
           </motion.div>
 
-          {/* Headline */}
           <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-bold tracking-tight text-white font-heading leading-[1.1] mb-6 drop-shadow-xl">
             <Translate>Your Small</Translate>{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-400 to-teal-400 animate-gradient drop-shadow-sm">
@@ -165,7 +158,6 @@ export default function HeroSection() {
             </span>
           </h1>
 
-          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,7 +167,6 @@ export default function HeroSection() {
             <Translate>Together we can fight hunger, poverty, and injustice. Every donation creates hope for families who need it most.</Translate>
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -204,14 +195,12 @@ export default function HeroSection() {
             </Button>
           </motion.div>
 
-          {/* Trust Indicators */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.6 }}
             className="flex flex-col sm:flex-row items-start sm:items-center gap-8"
           >
-            {/* Donor Avatars */}
             <div className="flex items-center gap-4">
               <div className="flex -space-x-4">
                 {[12, 15, 18, 22, 25].map((i) => (
@@ -231,8 +220,6 @@ export default function HeroSection() {
                 </div>
               </div>
             </div>
-
-            {/* Trust Badges */}
             <div className="flex flex-wrap gap-3">
               {TRUST_BADGES.map((badge) => (
                 <div
@@ -247,7 +234,6 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Mobile floating impact card */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

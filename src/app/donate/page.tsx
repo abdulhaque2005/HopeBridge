@@ -1,21 +1,18 @@
 import DonateForm from "./donate-form";
 import { Metadata } from "next";
-
 export const metadata: Metadata = {
   title: "Donate | HopeBridge Foundation",
   description: "Make a secure donation to support education, healthcare, food security, and emergency relief for those who need it most.",
 };
-
 export default function DonatePage() {
   return (
     <div className="min-h-screen bg-muted/20 py-12 relative overflow-hidden">
-      {/* Background decorations */}
+      {}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] -z-10" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[150px] -z-10" />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left Column - Emotional Content */}
+          {}
           <div className="space-y-8 sticky top-24">
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6 border border-primary/20">
@@ -32,8 +29,7 @@ export default function DonatePage() {
                 Join our community of 12,000+ donors and make a lasting impact. Your donation goes directly to those who need it most — providing food, education, and medical care to families across India.
               </p>
             </div>
-
-            {/* Trust Card */}
+            {}
             <div className="bg-background rounded-[2rem] p-8 border border-border shadow-sm">
               <h3 className="text-xl font-bold font-heading mb-6">Why give to HopeBridge?</h3>
               <ul className="space-y-5">
@@ -52,8 +48,7 @@ export default function DonatePage() {
                 ))}
               </ul>
             </div>
-
-            {/* Social Proof */}
+            {}
             <div className="bg-gradient-to-r from-primary/5 to-emerald-500/5 rounded-[2rem] p-6 border border-primary/10">
               <div className="flex items-center gap-4 mb-3">
                 <div className="flex -space-x-2">
@@ -72,8 +67,7 @@ export default function DonatePage() {
               </div>
             </div>
           </div>
-
-          {/* Right Column - Form */}
+          {}
           <div className="bg-background rounded-[2.5rem] p-6 sm:p-8 md:p-10 border border-border shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-3xl -z-10 rounded-full" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/5 blur-3xl -z-10 rounded-full" />

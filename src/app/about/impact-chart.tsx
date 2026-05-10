@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Area,
   AreaChart,
@@ -9,10 +8,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 const data = [
   { year: "2019", donations: 400000, impact: 2400 },
   { year: "2020", donations: 600000, impact: 3600 },
@@ -21,10 +18,8 @@ const data = [
   { year: "2023", donations: 1800000, impact: 12500 },
   { year: "2024", donations: 2400000, impact: 15000 },
 ];
-
 export default function ImpactChart() {
   const { t } = useLanguage();
-
   return (
     <div className="h-[400px] w-full" style={{ minWidth: 0 }}>
       <ResponsiveContainer width="100%" height="100%" minWidth={0}>

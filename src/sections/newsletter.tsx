@@ -1,16 +1,13 @@
 "use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckCircle2, Mail, Sparkles } from "lucide-react";
 import { Translate } from "@/components/translate";
-
 export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
@@ -18,13 +15,11 @@ export default function Newsletter() {
       setEmail("");
     }
   };
-
   return (
     <section className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-blue-500/10 to-purple-500/10" />
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/20 rounded-full blur-[100px]" />
       <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-500/20 rounded-full blur-[100px]" />
-
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -43,7 +38,6 @@ export default function Newsletter() {
           <p className="text-muted-foreground text-lg mb-8">
             <Translate>Get monthly updates on our impact, upcoming events, and inspiring stories delivered straight to your inbox.</Translate>
           </p>
-
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}

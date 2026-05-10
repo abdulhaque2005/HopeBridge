@@ -6,7 +6,6 @@ import SuccessStories from "@/sections/success-stories";
 import Testimonials from "@/sections/testimonials";
 import Newsletter from "@/sections/newsletter";
 import CTASection from "@/sections/cta-section";
-
 export default function Home() {
   return (
     <>

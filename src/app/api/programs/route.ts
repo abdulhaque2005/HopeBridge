@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-
 export async function GET() {
-  // Simulating a realistic Government / Global NGO API response for a Hackathon
   const realTimePrograms = [
     {
       id: "api-gov-1",
@@ -70,6 +68,5 @@ export async function GET() {
       urgent: true
     }
   ];
-
   return NextResponse.json(realTimePrograms);
 }

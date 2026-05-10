@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -10,7 +9,6 @@ import Link from "next/link";
 import { ArrowRight, Activity, ShieldCheck } from "lucide-react";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
-
 interface Program {
   id: string;
   title: string;
@@ -22,14 +20,11 @@ interface Program {
   verifiedBy?: string;
   urgent?: boolean;
 }
-
 export default function FeaturedPrograms() {
   const { t } = useLanguage();
   const [featured, setFeatured] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    // Fetching from the realistic Government/Disaster API route
     async function fetchPrograms() {
       try {
         const response = await fetch('/api/programs');
@@ -45,7 +40,6 @@ export default function FeaturedPrograms() {
     }
     fetchPrograms();
   }, []);
-
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -53,17 +47,15 @@ export default function FeaturedPrograms() {
       transition: { staggerChildren: 0.15 }
     }
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
     show: { 
       opacity: 1, 
       y: 0, 
       scale: 1,
-      transition: { type: "spring", stiffness: 100, damping: 15 }
+      transition: { type: "spring" as const, stiffness: 100, damping: 15 }
     }
   };
-
   if (loading) {
     return (
       <section className="py-24 bg-background">
@@ -76,14 +68,11 @@ export default function FeaturedPrograms() {
       </section>
     );
   }
-
   return (
     <section className="py-24 bg-zinc-50 dark:bg-zinc-950 relative overflow-hidden">
-      {/* Background decorations */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-
-      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 z-10 max-w-7xl">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <motion.div
@@ -98,7 +87,6 @@ export default function FeaturedPrograms() {
               </span>
               LIVE: Government & NGO Verified Crises
             </motion.div>
-
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 tracking-tight">
               <Translate>Urgent</Translate> <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500"><Translate>Missions</Translate></span>
             </h2>
@@ -110,13 +98,12 @@ export default function FeaturedPrograms() {
             {t("hero_secondary_cta")} <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>
-
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
         >
           {featured.map((program) => {
             const progress = (program.raised / program.goal) * 100;
@@ -125,12 +112,10 @@ export default function FeaturedPrograms() {
                 key={program.id}
                 variants={itemVariants}
                 whileHover={{ y: -16, scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
                 className="group relative"
               >
-                {/* Glowing glow effect behind the card */}
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-primary/50 to-emerald-500/50 rounded-[2.8rem] blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
                 <Card className="relative overflow-hidden h-full flex flex-col border-border/50 bg-background/80 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-500 rounded-[2.5rem]">
                   <div className="relative h-64 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
@@ -139,7 +124,6 @@ export default function FeaturedPrograms() {
                       alt={program.title}
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
-                    
                     <div className="absolute top-5 left-5 right-5 flex justify-between items-start z-20">
                       <Badge className="bg-white/95 text-black hover:bg-white backdrop-blur-md shadow-lg border-none px-4 py-1.5 font-bold text-xs uppercase tracking-wider">
                         <Translate>{program.category}</Translate>
@@ -150,13 +134,11 @@ export default function FeaturedPrograms() {
                         </Badge>
                       )}
                     </div>
-
                     <div className="absolute bottom-4 left-5 right-5 z-20 flex items-center gap-2 text-white/90 text-xs font-bold uppercase tracking-wider">
                       <ShieldCheck className="w-5 h-5 text-emerald-400" />
                       Verified by: {program.verifiedBy}
                     </div>
                   </div>
-                  
                   <CardHeader className="flex-1 px-8 pt-8 pb-4 relative">
                     <h3 className="text-2xl font-bold font-heading mb-3 group-hover:text-primary transition-colors leading-tight">
                       <Translate>{program.title}</Translate>
@@ -165,7 +147,6 @@ export default function FeaturedPrograms() {
                       <Translate>{program.description}</Translate>
                     </p>
                   </CardHeader>
-                  
                   <CardContent className="px-8 pb-6 space-y-5">
                     <div className="space-y-3">
                       <div className="flex justify-between text-sm font-bold">
@@ -177,7 +158,6 @@ export default function FeaturedPrograms() {
                       </div>
                     </div>
                   </CardContent>
-                  
                   <CardFooter className="px-8 pb-8 pt-0">
                     <Button className="w-full rounded-full h-14 text-base font-bold shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all group-hover:-translate-y-1" render={<Link href={`/programs/${program.id}`} />}>
                       <Translate>Donate to this mission</Translate>

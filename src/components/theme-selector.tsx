@@ -1,5 +1,5 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Check, ChevronDown, Palette } from "lucide-react";
 import { 
@@ -11,10 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-
 import { useLanguage } from "@/lib/language-provider";
 import { motion, AnimatePresence } from "framer-motion";
-
 const THEMES = [
   { id: "light", name: "Light Mode", description: "Clean & Bright" },
   { id: "dark", name: "Dark Mode", description: "Sleek & Deep" },
@@ -25,8 +23,13 @@ const THEMES = [
 ];
 
 export function ThemeSelector() {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const currentTheme = THEMES.find(t => t.id === theme) || THEMES[0];
 
@@ -37,17 +40,16 @@ export function ThemeSelector() {
         "gap-2 px-3 rounded-full hover:bg-muted font-medium text-sm transition-all border border-transparent hover:border-border"
       )}>
         <Palette className="h-4 w-4 text-muted-foreground" />
-        <span className="hidden sm:inline">{t(currentTheme.name)}</span>
+        <span className="hidden sm:inline">
+          {mounted ? t(currentTheme.name) : "..."}
+        </span>
         <ChevronDown className="h-3 w-3 opacity-50" />
       </DropdownMenuTrigger>
-      
       <DropdownMenuContent align="end" className="w-64 p-2 rounded-[2rem] border-border/50 bg-background/80 backdrop-blur-2xl shadow-2xl animate-in fade-in-0 zoom-in-95">
         <div className="p-2">
           <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{t("Select Visual Style")}</p>
         </div>
-        
         <DropdownMenuSeparator className="mx-2 opacity-50" />
-        
         <div className="p-1 space-y-0.5">
           <AnimatePresence mode="popLayout">
             {THEMES.map((t_item, idx) => (
@@ -81,9 +83,7 @@ export function ThemeSelector() {
             ))}
           </AnimatePresence>
         </div>
-        
         <DropdownMenuSeparator className="mx-2 opacity-50" />
-        
         <div className="p-2 text-[9px] text-center text-muted-foreground font-medium italic">
           {t("More themes coming soon")}
         </div>
