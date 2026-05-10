@@ -2,8 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Sparkles, HeartHandshake, BrainCircuit, Info, MessageSquare, Zap } from "lucide-react";
+import { Bot, X, Send, Sparkles, HeartHandshake, BrainCircuit, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/language-provider";
+import { Translate } from "./translate";
 
 type Message = {
   id: string;
@@ -13,14 +15,33 @@ type Message = {
 };
 
 const knowledgeBase = {
-  hello: "Welcome to HopeBridge! I am your AI Impact Assistant. I can help you explore our current missions, understand how your donations are utilized, or find opportunities to join our community. What can I help you with today?",
-  impact: "Your generosity fuels real transformation. For example, a donation of $10 provides clean drinking water for a child for a month. $50 can provide a complete school kit for two children, and $500 can sponsor a local entrepreneur through our micro-finance program. Every cent counts towards building a sustainable future.",
-  urgent: "Our most critical mission right now is the 'Education For All' initiative in rural regions, where we are setting up 15 new digital learning centers. We are currently at 75% of our goal and need urgent support to finalize the infrastructure before the new school term begins.",
-  transparency: "HopeBridge is committed to 100% transparency. We are a verified NGO with zero management fee on direct donations. 90% of your funds go straight to the field programs, and 10% supports our logistics and ground operations. You can find detailed impact reports on our 'Impact' page.",
-  volunteer: "We are always looking for passionate individuals! Currently, we have open spots for 'Remote Mentors' and 'Ground Support' for our food distribution drives. You can sign up directly on our Contact page or message us your area of interest.",
-  story: "Meet Rahul, a 12-year-old from a small village who dreamed of becoming an engineer. Through our 'Hope Scholarship', he received the books and tuition he needed. Today, he is the top student in his district. Stories like Rahul's are only possible because of people like you.",
-  mission: "Our mission is to bridge the gap between resources and those in need. We focus on four key pillars: Education, Healthcare, Disaster Relief, and Women Empowerment. Since 2018, we have impacted over 50,000 lives across 12 states.",
-  default: "That's a great question. At HopeBridge, we believe in collective action. Whether you are looking for data on our transparency, want to hear success stories, or wish to know where your donation goes, I'm here to provide all the details. Feel free to ask more!"
+  en: {
+    hello: "Welcome to HopeBridge! I am your AI Impact Assistant. I can help you explore our current missions, understand how your donations are utilized, or find opportunities to join our community. What can I help you with today?",
+    impact: "Your generosity fuels real transformation. For example, a donation of $10 provides clean drinking water for a child for a month. $50 can provide a complete school kit for two children, and $500 can sponsor a local entrepreneur. Every cent counts toward building a sustainable future.",
+    urgent: "Our most critical mission right now is the 'Education For All' initiative in rural regions, where we are setting up 15 new digital learning centers. We are currently at 75% of our goal and need urgent support.",
+    transparency: "HopeBridge is committed to 100% transparency. 90% of your funds go straight to the field programs, and 10% supports our logistics. You can find detailed impact reports on our 'Impact' page.",
+    volunteer: "We are always looking for passionate individuals! Currently, we have open spots for 'Remote Mentors' and 'Ground Support'. You can sign up on our Contact page.",
+    story: "Meet Rahul, a 12-year-old who dreamed of becoming an engineer. Through our 'Hope Scholarship', he received the books and tuition he needed. Today, he is the top student in his district.",
+    default: "That's a great question. At HopeBridge, we believe in collective action. Whether you are looking for data on our transparency or want to hear success stories, I'm here to provide all the details."
+  },
+  hi: {
+    hello: "HopeBridge में आपका स्वागत है! मैं आपका AI इम्पैक्ट असिस्टेंट हूँ। मैं आपको हमारे वर्तमान मिशनों को समझने, आपके दान के उपयोग को जानने या हमारे समुदाय से जुड़ने के तरीके खोजने में मदद कर सकता हूँ।",
+    impact: "आपकी उदारता वास्तविक परिवर्तन लाती है। उदाहरण के लिए, $10 का दान एक महीने के लिए एक बच्चे को पीने का साफ पानी प्रदान करता है। $50 दो बच्चों के लिए स्कूल किट प्रदान कर सकता है।",
+    urgent: "अभी हमारा सबसे महत्वपूर्ण मिशन ग्रामीण क्षेत्रों में 'सभी के लिए शिक्षा' पहल है। हम 15 नए डिजिटल शिक्षण केंद्र स्थापित कर रहे हैं। हमें आपके तत्काल समर्थन की आवश्यकता है।",
+    transparency: "HopeBridge 100% पारदर्शिता के लिए प्रतिबद्ध है। आपके फंड का 90% सीधे कार्यक्रमों में जाता है। आप हमारे 'इम्पैक्ट' पेज पर विस्तृत रिपोर्ट देख सकते हैं।",
+    volunteer: "हमें उत्साही व्यक्तियों की तलाश है! वर्तमान में हमारे पास 'रिमोट मेंटर्स' और 'ग्राउंड सपोर्ट' के लिए जगह खाली है। आप हमारे संपर्क पेज पर साइन अप कर सकते हैं।",
+    story: "राहुल से मिलें, एक 12 वर्षीय बच्चा जो इंजीनियर बनने का सपना देखता था। हमारी 'आशा छात्रवृत्ति' के माध्यम से, उसे किताबें और ट्यूशन मिला। आज वह अपने जिले का शीर्ष छात्र है।",
+    default: "यह एक अच्छा सवाल है। HopeBridge में, हम सामूहिक कार्रवाई में विश्वास करते हैं। चाहे आप हमारी पारदर्शिता के बारे में जानना चाहते हों या सफलता की कहानियाँ सुनना चाहते हों, मैं यहाँ हूँ।"
+  },
+  ur: {
+    hello: "HopeBridge میں خوش آمدید! میں آپ کا AI امپیکٹ اسسٹنٹ ہوں۔ میں آپ کو ہمارے موجودہ مشنوں کو سمجھنے، آپ کے عطیات کے استعمال کو جاننے یا ہماری کمیونٹی میں شامل ہونے کے طریقے تلاش کرنے میں مدد کر سکتا ہوں۔",
+    impact: "آپ کی سخاوت حقیقی تبدیلی لاتی ہے۔ مثال کے طور پر، $10 کا عطیہ ایک ماہ کے لیے ایک بچے کو پینے کا صاف پانی فراہم کرتا ہے۔ $50 دو بچوں کے لیے اسکول کٹ فراہم کر سکتا ہے۔",
+    urgent: "ابھی ہمارا سب سے اہم مشن دیہی علاقوں میں 'سب کے لیے تعلیم' کی پہل ہے۔ ہم 15 نئے ڈیجیٹل لرننگ سینٹرز قائم کر رہے ہیں۔ ہمیں آپ کی فوری مدد کی ضرورت ہے۔",
+    transparency: "HopeBridge 100% شفافیت کے لیے پرعزم ہے۔ آپ کے فنڈز کا 90% براہ راست پروگراموں میں جاتا ہے۔ آپ ہمارے 'امپیکٹ' پیج پر تفصیلی رپورٹ دیکھ سکتے ہیں۔",
+    volunteer: "ہمیں پرجوش افراد کی تلاش ہے! فی الحال ہمارے پاس 'ریموٹ مینٹرز' اور 'گراؤنڈ سپورٹ' کے لیے آسامیاں خالی ہیں۔ آپ ہمارے رابطہ پیج پر سائن اپ کر سکتے ہیں۔",
+    story: "راہول سے ملیں، ایک 12 سالہ بچہ جو انجینئر بننے کا خواب دیکھتا تھا۔ ہماری 'امید اسکالرشپ' کے ذریعے، اسے کتابیں اور ٹیوشن ملی۔ آج وہ اپنے ضلع کا ٹاپ طالب علم ہے۔",
+    default: "یہ ایک اچھا سوال ہے۔ HopeBridge میں، ہم اجتماعی کارروائی پر یقین رکھتے ہیں۔ میں یہاں تمام تفصیلات فراہم کرنے کے لیے موجود ہوں۔"
+  }
 };
 
 const SUGGESTED_QUESTIONS = [
@@ -31,6 +52,7 @@ const SUGGESTED_QUESTIONS = [
 ];
 
 export function AiAssistant() {
+  const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -39,37 +61,37 @@ export function AiAssistant() {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
+      const lang = (language as "en" | "hi" | "ur") || "en";
       setMessages([
         {
           id: "msg-0",
           role: "assistant",
-          content: knowledgeBase.hello,
+          content: knowledgeBase[lang].hello,
           timestamp: new Date(),
         }
       ]);
     }
-  }, [isOpen, messages.length]);
+  }, [isOpen, language, messages.length]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
   const processResponse = (userInput: string) => {
+    const lang = (language as "en" | "hi" | "ur") || "en";
     const lowerInput = userInput.toLowerCase();
-    let responseText = knowledgeBase.default;
+    let responseText = knowledgeBase[lang].default;
 
-    if (lowerInput.includes("impact") || lowerInput.includes("spend") || lowerInput.includes("money") || lowerInput.includes("donate")) {
-      responseText = knowledgeBase.impact;
-    } else if (lowerInput.includes("urgent") || lowerInput.includes("campaign") || lowerInput.includes("now") || lowerInput.includes("current")) {
-      responseText = knowledgeBase.urgent;
-    } else if (lowerInput.includes("transparent") || lowerInput.includes("safe") || lowerInput.includes("trust") || lowerInput.includes("verify")) {
-      responseText = knowledgeBase.transparency;
-    } else if (lowerInput.includes("volunteer") || lowerInput.includes("join") || lowerInput.includes("help") || lowerInput.includes("work")) {
-      responseText = knowledgeBase.volunteer;
-    } else if (lowerInput.includes("story") || lowerInput.includes("success") || lowerInput.includes("example")) {
-      responseText = knowledgeBase.story;
-    } else if (lowerInput.includes("mission") || lowerInput.includes("vision") || lowerInput.includes("what you do")) {
-      responseText = knowledgeBase.mission;
+    if (lowerInput.includes("impact") || lowerInput.includes("spend") || lowerInput.includes("money") || lowerInput.includes("donate") || lowerInput.includes("paisa") || lowerInput.includes("mali")) {
+      responseText = knowledgeBase[lang].impact;
+    } else if (lowerInput.includes("urgent") || lowerInput.includes("campaign") || lowerInput.includes("now") || lowerInput.includes("current") || lowerInput.includes("fauri")) {
+      responseText = knowledgeBase[lang].urgent;
+    } else if (lowerInput.includes("transparent") || lowerInput.includes("safe") || lowerInput.includes("trust") || lowerInput.includes("verify") || lowerInput.includes("bharosa")) {
+      responseText = knowledgeBase[lang].transparency;
+    } else if (lowerInput.includes("volunteer") || lowerInput.includes("join") || lowerInput.includes("help") || lowerInput.includes("work") || lowerInput.includes("madad")) {
+      responseText = knowledgeBase[lang].volunteer;
+    } else if (lowerInput.includes("story") || lowerInput.includes("success") || lowerInput.includes("example") || lowerInput.includes("kahani")) {
+      responseText = knowledgeBase[lang].story;
     }
 
     setTimeout(() => {
@@ -127,6 +149,7 @@ export function AiAssistant() {
             exit={{ opacity: 0, y: 100, scale: 0.8, filter: "blur(10px)" }}
             transition={{ type: "spring", damping: 20, stiffness: 150 }}
             className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-[420px] h-[650px] max-h-[85vh] flex flex-col bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-border shadow-2xl overflow-hidden shadow-emerald-500/10"
+            dir={language === 'ur' ? 'rtl' : 'ltr'}
           >
             <div className="flex items-center justify-between p-6 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-transparent border-b border-border/50">
               <div className="flex items-center gap-4">
@@ -135,12 +158,12 @@ export function AiAssistant() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
-                    HopeBridge AI
+                    <Translate>Hope AI Companion</Translate>
                     <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                   </h3>
                   <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    Live Support
+                    <Translate>Online & Ready</Translate>
                   </div>
                 </div>
               </div>
@@ -184,7 +207,7 @@ export function AiAssistant() {
                   className="flex gap-3 justify-start"
                 >
                   <div className="w-9 h-9 shrink-0 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mt-1">
-                    <Bot className="w-5 h-5" />
+                    <Sparkles className="w-5 h-5" />
                   </div>
                   <div className="px-5 py-4 rounded-3xl bg-muted/40 dark:bg-muted/10 text-foreground rounded-tl-sm border border-border/50 flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -201,10 +224,10 @@ export function AiAssistant() {
                 {SUGGESTED_QUESTIONS.map((sq) => (
                   <button
                     key={sq.key}
-                    onClick={() => handleSend(sq.text)}
+                    onClick={() => handleSend(t(sq.text))}
                     className="text-xs font-bold px-4 py-2 rounded-xl border border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-500/5 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-500/10 transition-all hover:-translate-y-0.5"
                   >
-                    {sq.text}
+                    <Translate>{sq.text}</Translate>
                   </button>
                 ))}
               </div>
@@ -224,6 +247,7 @@ export function AiAssistant() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about our mission..."
                   className="flex-1 bg-muted/30 border border-border/50 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-muted-foreground/50"
+                  dir="auto"
                 />
                 <Button 
                   type="submit" 
