@@ -11,7 +11,7 @@ export async function GET() {
       image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       raised: 3450000,
       goal: 5000000,
-      verifiedBy: "NDMA API",
+      verifiedBy: "NDMA",
       urgent: true
     },
     {
@@ -22,7 +22,7 @@ export async function GET() {
       image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       raised: 1200000,
       goal: 2000000,
-      verifiedBy: "Ministry of Education API",
+      verifiedBy: "Ministry of Education",
       urgent: false
     },
     {
@@ -33,7 +33,7 @@ export async function GET() {
       image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       raised: 3800000,
       goal: 4500000,
-      verifiedBy: "Ministry of Health API",
+      verifiedBy: "Ministry of Health",
       urgent: true
     },
     {
@@ -44,7 +44,7 @@ export async function GET() {
       image: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       raised: 850000,
       goal: 1500000,
-      verifiedBy: "Jal Shakti API",
+      verifiedBy: "Jal Shakti",
       urgent: false
     },
     {
@@ -55,7 +55,7 @@ export async function GET() {
       image: "https://images.unsplash.com/photo-1528301721190-186c3bd85418?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       raised: 550000,
       goal: 1000000,
-      verifiedBy: "Skill India API",
+      verifiedBy: "Skill India",
       urgent: false
     },
     {
@@ -66,7 +66,7 @@ export async function GET() {
       image: "https://images.unsplash.com/photo-1518398046578-8cca57782e17?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       raised: 2100000,
       goal: 2500000,
-      verifiedBy: "Govt Welfare API",
+      verifiedBy: "Govt Welfare",
       urgent: true
     }
   ];

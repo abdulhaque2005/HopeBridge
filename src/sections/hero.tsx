@@ -184,13 +184,13 @@ export default function HeroSection() {
           >
             <Button
               size="lg"
-              className="rounded-full h-16 px-12 text-xl font-black bg-gradient-to-r from-red-600 via-rose-500 to-red-600 bg-[length:200%_100%] animate-gradient text-white shadow-[0_0_40px_-10px_rgba(239,68,68,0.8)] hover:shadow-[0_0_60px_-15px_rgba(239,68,68,1)] hover:scale-[1.05] transition-all duration-300 active:scale-95 group relative overflow-hidden border border-red-400/50"
+              className="rounded-full h-16 px-12 text-xl font-black bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 bg-[length:200%_100%] animate-gradient text-white shadow-[0_0_40px_-10px_rgba(16,185,129,0.8)] hover:shadow-[0_0_60px_-15px_rgba(16,185,129,1)] hover:scale-[1.05] transition-all duration-300 active:scale-95 group relative overflow-hidden border border-emerald-400/50"
               render={<Link href="/donate" />}
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
               <span className="relative z-10 flex items-center gap-2 drop-shadow-md">
                 <Translate>DONATE NOW</Translate>
-                <HeartPulse className="w-7 h-7 group-hover:animate-heartbeat" />
+                <Heart className="w-7 h-7 fill-white group-hover:animate-heartbeat" />
               </span>
             </Button>
             <Button

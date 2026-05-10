@@ -166,24 +166,26 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
             transition={{ delay: 0.3 }}
             className="lg:sticky lg:top-24 space-y-6"
           >
-            <div className="bg-background rounded-[2.5rem] p-8 border border-border shadow-2xl shadow-primary/5">
-              <div className="space-y-8">
+            <div className="bg-background/95 backdrop-blur-xl rounded-[2.5rem] p-8 border-2 border-emerald-500/20 shadow-2xl shadow-emerald-500/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none" />
+              
+              <div className="space-y-8 relative z-10">
                 <div>
                   <div className="flex justify-between items-end mb-3">
-                    <span className="text-3xl font-bold text-primary">
+                    <span className="text-4xl font-bold text-emerald-600 dark:text-emerald-400">
                       ₹{program.raised.toLocaleString()}
                     </span>
                     <span className="text-xs text-muted-foreground font-bold uppercase tracking-wider">
                       <Translate>raised of</Translate> ₹{program.goal.toLocaleString()}
                     </span>
                   </div>
-                  <Progress value={progress} className="h-2.5 bg-primary/10" />
+                  <Progress value={progress} className="h-3 bg-emerald-500/10" indicatorClassName="bg-emerald-500" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 py-6 border-y border-border/50">
                   <div className="flex items-center gap-3">
-                    <div className="bg-primary/10 p-2.5 rounded-2xl text-primary">
-                      <Users className="w-5 h-5" />
+                    <div className="bg-emerald-500/10 p-3 rounded-2xl text-emerald-600 dark:text-emerald-400">
+                      <Users className="w-6 h-6" />
                     </div>
                     <div>
                       <p className="text-xl font-bold">{program.donors}</p>
@@ -191,8 +193,8 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="bg-blue-500/10 p-2.5 rounded-2xl text-blue-500">
-                      <Calendar className="w-5 h-5" />
+                    <div className="bg-blue-500/10 p-3 rounded-2xl text-blue-500">
+                      <Calendar className="w-6 h-6" />
                     </div>
                     <div>
                       <p className="text-xl font-bold">{program.daysLeft}</p>
@@ -202,10 +204,11 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
                 </div>
 
                 <div className="space-y-4">
-                  <Button size="lg" className="w-full rounded-full h-14 text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95" render={<Link href={`/donate?program=${program.id}`} />}>
-                    {t("nav_donate")} <Heart className="ml-2 w-5 h-5" />
+                  <Button size="lg" className="w-full rounded-full h-16 text-xl font-black bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 bg-[length:200%_100%] animate-gradient text-white shadow-[0_0_30px_-5px_rgba(16,185,129,0.5)] hover:shadow-[0_0_40px_-5px_rgba(16,185,129,0.8)] hover:-translate-y-1 transition-all duration-300 group" render={<Link href={`/donate?program=${program.id}`} />}>
+                    <Translate>Donate Now</Translate>
+                    <Heart className="ml-2 w-6 h-6 fill-white group-hover:scale-110 transition-transform group-hover:animate-heartbeat" />
                   </Button>
-                  <Button variant="ghost" size="lg" className="w-full rounded-full h-14 hover:bg-muted font-bold text-sm uppercase tracking-widest">
+                  <Button variant="outline" size="lg" className="w-full rounded-full h-14 hover:bg-emerald-50 dark:hover:bg-emerald-950 font-bold text-sm uppercase tracking-widest border-border/50 hover:border-emerald-500/30 hover:text-emerald-600 transition-colors">
                     <Share2 className="mr-2 w-5 h-5" /> <Translate>Share Campaign</Translate>
                   </Button>
                 </div>
