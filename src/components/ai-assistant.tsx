@@ -2,10 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Sparkles, User, ArrowDownCircle, HeartHandshake } from "lucide-react";
+import { Bot, X, Send, Sparkles, HeartHandshake, BrainCircuit, Info, MessageSquare, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/lib/language-provider";
-import { Translate } from "./translate";
 
 type Message = {
   id: string;
@@ -15,44 +13,24 @@ type Message = {
 };
 
 const knowledgeBase = {
-  en: {
-    hello: "Hello! I am the HopeBridge AI Assistant. I'm here to help you understand our campaigns, see the impact of your donations, or find ways to volunteer. How can I support you today?",
-    impact: "Your contribution creates an immediate, life-changing impact. For instance, just ₹500 provides nutritious meals for 5 children for an entire week. A larger donation of ₹5,000 can fully support emergency medical aid for a family recovering from recent floods.",
-    urgent: "Currently, our 'National Flood Relief Fund (Assam & Bihar)' needs the most urgent support. We are actively distributing clean water and thermal wear to over 2,300 evacuated families.",
-    transparency: "We take your trust very seriously. 85% of all donations go directly toward community programs and emergency support on the ground, while 15% is used for logistics and operations. All our major disaster relief programs are verified by official entities like the NDMA.",
-    volunteer: "We would love to have you on the team! We urgently need volunteers for food distribution in rural areas and remote tutoring for our Education Support Program. You can easily join us by visiting the Volunteer section on our Contact page.",
-    story: "Let me tell you about Fatima. She is a single mother of three who used a ₹15,000 micro-loan from our Women Empowerment Initiative to start a small tailoring business. Today, she is financially independent and even employs two other women from her village. Your donations make these stories possible.",
-    default: "Thank you for caring about our mission at HopeBridge. Whether you want to learn where your donation goes, discover urgent campaigns, or read about the lives we've changed, I am here to guide you."
-  },
-  hi: {
-    hello: "नमस्ते! मैं HopeBridge AI असिस्टेंट हूँ। मैं हमारे अभियानों को समझने, आपके दान के प्रभाव को देखने, या स्वयंसेवक बनने के तरीके खोजने में आपकी मदद करने के लिए यहाँ हूँ। मैं आज आपकी कैसे मदद कर सकता हूँ?",
-    impact: "आपका योगदान तत्काल प्रभाव डालता है। उदाहरण के लिए, मात्र ₹500 पूरे एक सप्ताह के लिए 5 बच्चों को पौष्टिक भोजन प्रदान कर सकते हैं। ₹5,000 का बड़ा दान बाढ़ से उबरने वाले परिवार के लिए चिकित्सा सहायता का पूरा समर्थन कर सकता है।",
-    urgent: "वर्तमान में, हमारे 'राष्ट्रीय बाढ़ राहत कोष (असम और बिहार)' को सबसे तत्काल समर्थन की आवश्यकता है। हम सक्रिय रूप से 2,300 से अधिक निकाले गए परिवारों को स्वच्छ पानी और गर्म कपड़े वितरित कर रहे हैं।",
-    transparency: "हम आपके विश्वास को बहुत गंभीरता से लेते हैं। सभी दानों का 85% सीधे जमीनी स्तर पर सामुदायिक कार्यक्रमों और आपातकालीन सहायता की ओर जाता है। हमारे सभी प्रमुख आपदा राहत कार्यक्रम NDMA जैसी आधिकारिक संस्थाओं द्वारा सत्यापित हैं।",
-    volunteer: "हमें आपकी मदद की आवश्यकता है! हमें ग्रामीण क्षेत्रों में भोजन वितरण और हमारे शिक्षा सहायता कार्यक्रम के लिए दूरस्थ ट्यूशन के लिए स्वयंसेवकों की तत्काल आवश्यकता है।",
-    story: "मैं आपको फातिमा के बारे में बताता हूँ। वह तीन बच्चों की अकेली माँ है, जिसने हमारी महिला सशक्तیکरण पहल से ₹15,000 के माइक्रो-लोन का उपयोग करके सिलाई का व्यवसाय शुरू किया। आज, वह आर्थिक रूप से स्वतंत्र है।",
-    default: "HopeBridge के मिशन की परवाह करने के लिए धन्यवाद। चाहे आप जानना चाहते हों कि आपका दान कहाँ जाता है, या उन जीवन के बारे में पढ़ना चाहते हों जिन्हें हमने बदला है, मैं यहाँ आपका मार्गदर्शन करने के लिए हूँ।"
-  },
-  ur: {
-    hello: "ہیلو! میں HopeBridge AI اسسٹنٹ ہوں۔ میں ہماری مہمات کو سمجھنے، آپ کے عطیات کے اثرات دیکھنے، یا رضاکار بننے کے طریقے تلاش کرنے میں آپ کی مدد کرنے کے لیے یہاں ہوں۔ میں آج آپ کی کس طرح مدد کر سکتا ہوں؟",
-    impact: "آپ کا عطیہ فوری اثر پیدا کرتا ہے۔ مثال کے طور پر، صرف ₹500 پورے ایک ہفتے کے لیے 5 بچوں کو غذائیت سے بھرپور کھانا فراہم کر سکتا ہے۔ ₹5,000 کا بڑا عطیہ سیلاب سے صحت یاب ہونے والے خاندان کے لیے طبی امداد کی مکمل مدد کر سکتا ہے۔",
-    urgent: "فی حال، ہمارے 'نیشنل فلڈ ریلیف فنڈ (آسام اور بہار)' کو سب سے فوری مدد کی ضرورت ہے۔ ہم 2,300 سے زیادہ نکالے گئے خاندانوں میں پینے کا صاف پانی اور گرم کپڑے تقسیم کر رہے ہیں۔",
-    transparency: "ہم آپ کے اعتماد کو بہت سنجیدگی سے لیتے ہیں۔ تمام عطیات کا 85% براہ راست زمینی سطح پر کمیونٹی پروگراموں اور ہنگامی امداد کی طرف جاتا ہے۔",
-    volunteer: "ہمیں آپ کی مدد کی ضرورت ہے! ہمیں دیہی علاقوں میں خوراک کی تقسیم کے لیے رضاکاروں کی فوری ضرورت ہے۔",
-    story: "میں آپ کو فاطمہ کے بارے میں بتاتا ہوں۔ وہ تین بچوں کی اکیلی ماں ہے جس نے ہماری خواتین کو بااختیار بنانے کی پہل سے ₹15,000 کا مائیکرو لون استعمال کر کے سلائی کا کاروبار شروع کیا۔ آج وہ مالی طور پر خود مختار ہے۔",
-    default: "HopeBridge کے مشن کا خیال رکھنے کے لیے آپ کا شکریہ۔ میں یہاں آپ کی رہنمائی کے لیے موجود ہوں۔"
-  }
+  hello: "Welcome to HopeBridge! I am your AI Impact Assistant. I can help you explore our current missions, understand how your donations are utilized, or find opportunities to join our community. What can I help you with today?",
+  impact: "Your generosity fuels real transformation. For example, a donation of $10 provides clean drinking water for a child for a month. $50 can provide a complete school kit for two children, and $500 can sponsor a local entrepreneur through our micro-finance program. Every cent counts towards building a sustainable future.",
+  urgent: "Our most critical mission right now is the 'Education For All' initiative in rural regions, where we are setting up 15 new digital learning centers. We are currently at 75% of our goal and need urgent support to finalize the infrastructure before the new school term begins.",
+  transparency: "HopeBridge is committed to 100% transparency. We are a verified NGO with zero management fee on direct donations. 90% of your funds go straight to the field programs, and 10% supports our logistics and ground operations. You can find detailed impact reports on our 'Impact' page.",
+  volunteer: "We are always looking for passionate individuals! Currently, we have open spots for 'Remote Mentors' and 'Ground Support' for our food distribution drives. You can sign up directly on our Contact page or message us your area of interest.",
+  story: "Meet Rahul, a 12-year-old from a small village who dreamed of becoming an engineer. Through our 'Hope Scholarship', he received the books and tuition he needed. Today, he is the top student in his district. Stories like Rahul's are only possible because of people like you.",
+  mission: "Our mission is to bridge the gap between resources and those in need. We focus on four key pillars: Education, Healthcare, Disaster Relief, and Women Empowerment. Since 2018, we have impacted over 50,000 lives across 12 states.",
+  default: "That's a great question. At HopeBridge, we believe in collective action. Whether you are looking for data on our transparency, want to hear success stories, or wish to know where your donation goes, I'm here to provide all the details. Feel free to ask more!"
 };
 
 const SUGGESTED_QUESTIONS = [
-  { key: "impact", text: "How does my donation help?" },
-  { key: "urgent", text: "Which campaign needs urgent support?" },
-  { key: "story", text: "Tell me an impact story" },
-  { key: "transparency", text: "How transparent is the NGO?" },
+  { key: "impact", text: "How is my money spent?" },
+  { key: "urgent", text: "Current urgent missions?" },
+  { key: "transparency", text: "Is my donation safe?" },
+  { key: "story", text: "Share a success story" },
 ];
 
 export function AiAssistant() {
-  const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -61,38 +39,37 @@ export function AiAssistant() {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      const lang = language as "en" | "hi" | "ur";
       setMessages([
         {
           id: "msg-0",
           role: "assistant",
-          content: knowledgeBase[lang].hello,
+          content: knowledgeBase.hello,
           timestamp: new Date(),
         }
       ]);
     }
-  }, [isOpen, language, messages.length]);
+  }, [isOpen, messages.length]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
   const processResponse = (userInput: string) => {
-    const lang = language as "en" | "hi" | "ur";
     const lowerInput = userInput.toLowerCase();
-    
-    let responseText = knowledgeBase[lang].default;
+    let responseText = knowledgeBase.default;
 
-    if (lowerInput.includes("impact") || lowerInput.includes("help") || lowerInput.includes("how much") || lowerInput.includes("donate")) {
-      responseText = knowledgeBase[lang].impact;
-    } else if (lowerInput.includes("urgent") || lowerInput.includes("campaign") || lowerInput.includes("need")) {
-      responseText = knowledgeBase[lang].urgent;
-    } else if (lowerInput.includes("transparent") || lowerInput.includes("trust") || lowerInput.includes("where") || lowerInput.includes("usage")) {
-      responseText = knowledgeBase[lang].transparency;
-    } else if (lowerInput.includes("volunteer") || lowerInput.includes("join") || lowerInput.includes("work")) {
-      responseText = knowledgeBase[lang].volunteer;
-    } else if (lowerInput.includes("story") || lowerInput.includes("example") || lowerInput.includes("beneficiary")) {
-      responseText = knowledgeBase[lang].story;
+    if (lowerInput.includes("impact") || lowerInput.includes("spend") || lowerInput.includes("money") || lowerInput.includes("donate")) {
+      responseText = knowledgeBase.impact;
+    } else if (lowerInput.includes("urgent") || lowerInput.includes("campaign") || lowerInput.includes("now") || lowerInput.includes("current")) {
+      responseText = knowledgeBase.urgent;
+    } else if (lowerInput.includes("transparent") || lowerInput.includes("safe") || lowerInput.includes("trust") || lowerInput.includes("verify")) {
+      responseText = knowledgeBase.transparency;
+    } else if (lowerInput.includes("volunteer") || lowerInput.includes("join") || lowerInput.includes("help") || lowerInput.includes("work")) {
+      responseText = knowledgeBase.volunteer;
+    } else if (lowerInput.includes("story") || lowerInput.includes("success") || lowerInput.includes("example")) {
+      responseText = knowledgeBase.story;
+    } else if (lowerInput.includes("mission") || lowerInput.includes("vision") || lowerInput.includes("what you do")) {
+      responseText = knowledgeBase.mission;
     }
 
     setTimeout(() => {
@@ -106,7 +83,7 @@ export function AiAssistant() {
         },
       ]);
       setIsTyping(false);
-    }, 1500 + Math.random() * 1000); 
+    }, 1200 + Math.random() * 800); 
   };
 
   const handleSend = (text: string) => {
@@ -132,67 +109,67 @@ export function AiAssistant() {
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-xl shadow-emerald-500/30 flex items-center justify-center transition-all ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : ''}`}
+        className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 text-white shadow-[0_10px_40px_-10px_rgba(16,185,129,0.5)] flex items-center justify-center transition-all ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : ''}`}
       >
-        <Sparkles className="w-6 h-6 absolute animate-ping opacity-50" />
-        <Bot className="w-7 h-7 relative z-10" />
+        <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse" />
+        <BrainCircuit className="w-8 h-8 relative z-10" />
+        <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950" />
       </motion.button>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            transition={{ type: "spring" as const, damping: 25, stiffness: 200 }}
-            className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-[400px] h-[600px] max-h-[80vh] flex flex-col bg-white/90 dark:bg-zinc-950/90 backdrop-blur-2xl rounded-[2rem] border border-border/50 shadow-2xl overflow-hidden"
-            dir={language === 'ur' ? 'rtl' : 'ltr'}
+            initial={{ opacity: 0, y: 100, scale: 0.8, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 100, scale: 0.8, filter: "blur(10px)" }}
+            transition={{ type: "spring", damping: 20, stiffness: 150 }}
+            className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-[420px] h-[650px] max-h-[85vh] flex flex-col bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-border shadow-2xl overflow-hidden shadow-emerald-500/10"
           >
-            <div className="flex items-center justify-between p-5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-border/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-md">
-                  <Bot className="w-5 h-5" />
+            <div className="flex items-center justify-between p-6 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-transparent border-b border-border/50">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 rotate-3">
+                  <BrainCircuit className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground leading-none mb-1"><Translate>Hope AI Companion</Translate></h3>
-                  <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <Translate>Online & Ready</Translate>
+                  <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
+                    HopeBridge AI
+                    <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                  </h3>
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Live Support
                   </div>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground"
+                className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-muted-foreground"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 scroll-smooth">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth">
               {messages.map((msg) => (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: msg.role === "user" ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   key={msg.id}
                   className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="w-8 h-8 shrink-0 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mt-1">
-                      <HeartHandshake className="w-4 h-4" />
+                    <div className="w-9 h-9 shrink-0 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mt-1 border border-emerald-500/10 shadow-sm">
+                      <Sparkles className="w-5 h-5" />
                     </div>
                   )}
                   <div 
-                    className={`px-5 py-3.5 rounded-2xl max-w-[80%] text-[15px] leading-relaxed shadow-sm ${
+                    className={`px-5 py-4 rounded-3xl max-w-[85%] text-[15px] leading-relaxed ${
                       msg.role === "user" 
-                        ? "bg-foreground text-background rounded-tr-sm" 
-                        : "bg-muted/50 dark:bg-muted/20 text-foreground rounded-tl-sm border border-border/50"
+                        ? "bg-primary text-primary-foreground rounded-tr-sm shadow-md" 
+                        : "bg-muted/40 dark:bg-muted/10 text-foreground rounded-tl-sm border border-border/50 shadow-sm"
                     }`}
                   >
                     {msg.content}
@@ -202,14 +179,14 @@ export function AiAssistant() {
 
               {isTyping && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   className="flex gap-3 justify-start"
                 >
-                  <div className="w-8 h-8 shrink-0 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mt-1">
-                    <Bot className="w-4 h-4" />
+                  <div className="w-9 h-9 shrink-0 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mt-1">
+                    <Bot className="w-5 h-5" />
                   </div>
-                  <div className="px-5 py-4 rounded-2xl bg-muted/50 dark:bg-muted/20 text-foreground rounded-tl-sm border border-border/50 flex items-center gap-1.5">
+                  <div className="px-5 py-4 rounded-3xl bg-muted/40 dark:bg-muted/10 text-foreground rounded-tl-sm border border-border/50 flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -219,43 +196,41 @@ export function AiAssistant() {
               <div ref={messagesEndRef} />
             </div>
 
-            {messages.length < 5 && !isTyping && (
-              <div className="px-5 pb-3 flex flex-wrap gap-2">
+            {messages.length < 6 && !isTyping && (
+              <div className="px-6 pb-4 flex flex-wrap gap-2">
                 {SUGGESTED_QUESTIONS.map((sq) => (
                   <button
                     key={sq.key}
                     onClick={() => handleSend(sq.text)}
-                    className="text-xs font-medium px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors"
+                    className="text-xs font-bold px-4 py-2 rounded-xl border border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-500/5 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-500/10 transition-all hover:-translate-y-0.5"
                   >
-                    <Translate>{sq.text}</Translate>
+                    {sq.text}
                   </button>
                 ))}
               </div>
             )}
 
-            <div className="p-4 bg-background border-t border-border/50">
+            <div className="p-6 bg-background border-t border-border/50">
               <form 
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSend(input);
                 }}
-                className="flex items-center gap-2 relative"
+                className="flex items-center gap-3 relative"
               >
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask me about our impact..."
-                  className="flex-1 bg-muted/50 border border-border/50 rounded-full px-5 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
-                  dir="auto"
+                  placeholder="Ask about our mission..."
+                  className="flex-1 bg-muted/30 border border-border/50 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-muted-foreground/50"
                 />
                 <Button 
                   type="submit" 
-                  size="icon"
                   disabled={!input.trim() || isTyping}
-                  className="rounded-full w-12 h-12 bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shrink-0 disabled:opacity-50"
+                  className="rounded-2xl w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 shrink-0 transition-transform active:scale-95 disabled:opacity-50"
                 >
-                  <Send className="w-5 h-5" />
+                  <Send className="w-6 h-6" />
                 </Button>
               </form>
             </div>

@@ -24,7 +24,7 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -48,7 +48,7 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {}
           <div className="lg:col-span-7 space-y-12">
