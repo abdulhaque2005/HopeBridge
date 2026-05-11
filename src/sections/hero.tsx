@@ -29,7 +29,7 @@ export default function HeroSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 6000);
+    }, 4500); // Faster slider interval
     return () => clearInterval(interval);
   }, []);
 
@@ -40,15 +40,17 @@ export default function HeroSection() {
           <motion.div
             key={src}
             className="absolute inset-0 w-full h-full"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ 
               opacity: currentImageIndex === index ? 1 : 0,
-              scale: currentImageIndex === index ? 1 : 1.1,
+              scale: currentImageIndex === index ? 1 : 1.15,
+              filter: currentImageIndex === index ? 'blur(0px)' : 'blur(10px)',
               zIndex: currentImageIndex === index ? 10 : 0
             }}
             transition={{ 
-              opacity: { duration: 1.5, ease: "easeInOut" },
-              scale: { duration: 10, ease: "easeOut" }
+              opacity: { duration: 1.2, ease: "easeInOut" },
+              scale: { duration: 6, ease: "easeOut" },
+              filter: { duration: 1.2, ease: "easeInOut" }
             }}
           >
             <img
