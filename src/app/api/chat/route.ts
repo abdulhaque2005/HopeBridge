@@ -21,11 +21,9 @@ ABOUT HOPEBRIDGE:
 
 DONATION AMOUNTS IMPACT:
 - ₹500 = Clean drinking water + meals for a child for 1 month
-- ₹2,000 = Complete digital learning kit for rural students  
-- ₹5,000 = Healthcare checkup camp for 50 villagers
-- ₹10,000 = Full scholarship for 1 year for a rural student
-
-Always encourage users to visit the Donate page or Contact page when appropriate.`;
+- ₹1,500 = School supplies + tuition for 2 students for a year
+- ₹5,000 = Emergency medical healthcare for an entire family
+- ₹10,000 = Funds a woman's micro-business to break the cycle of poverty.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,8 +37,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Using Pollinations AI (Free, No Key Required, 100% Real AI)
-    // This solves the Gemini "Quota Exceeded" issue for the hackathon
     const payload = {
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
@@ -49,7 +45,7 @@ export async function POST(req: NextRequest) {
           content: m.content
         }))
       ],
-      model: "searchgpt" // Or "openai" / "llama"
+      model: "searchgpt"
     };
 
     const response = await fetch("https://text.pollinations.ai/", {
@@ -82,7 +78,6 @@ export async function POST(req: NextRequest) {
 function getSmartFallbackResponse(messages: any[]) {
   const lastMessage = messages[messages.length - 1]?.content?.toLowerCase() || "";
   
-  // Advanced intent matching for hackathon
   if (lastMessage.match(/kaise ho|how are you|kya haal/)) {
     return NextResponse.json({ message: "Main bilkul theek hoon! Main Hope AI hoon. Aapki kya madad kar sakta hoon aaj? Aap NGO ke baare mein jaan sakte hain ya donate kar sakte hain." });
   } 
@@ -126,6 +121,5 @@ function getSmartFallbackResponse(messages: any[]) {
     return NextResponse.json({ message: "Hum education, healthcare, disaster relief, aur women empowerment ke field mein kaam karte hain taaki poverty aur inequality ko khatam kiya ja sake." });
   }
   
-  // Default fallback if no intent matches
   return NextResponse.json({ message: "Maaf kijiyega, mujhe is baare mein thik se nahi pata. Par main aapko HopeBridge NGO, donations, aur hamare programs ke baare mein zaroor bata sakta hoon. Aap kis baare mein janna chahenge?" });
 }

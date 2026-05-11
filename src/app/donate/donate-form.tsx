@@ -88,12 +88,8 @@ export default function DonateForm() {
       ? "Creates massive community impact"
       : "Helps provide essential support");
   const onSubmit = async (data: z.infer<typeof donationSchema>) => {
-    setStep(3); // Show loading spinner
+    setStep(3);
     
-    // Guaranteed Demo Mode:
-    // Since we don't have a real Razorpay backend with Order IDs, 
-    // the official Razorpay script will hang. For the hackathon/demo,
-    // we simulate a secure 1.5 second processing delay, then show success.
     setTimeout(() => {
       setShowConfetti(true);
       setIsSuccess(true);
