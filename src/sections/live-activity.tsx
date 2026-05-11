@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, TrendingUp, HandHeart } from "lucide-react";
+import { TrendingUp, HandHeart } from "lucide-react";
 import { Translate } from "@/components/translate";
+import Image from "next/image";
 const INITIAL_DONATIONS = [
   { id: 1, name: "Arjun K.", amount: 5000, time: "2 minutes ago", program: "Education Support" },
   { id: 2, name: "Anonymous", amount: 1500, time: "5 minutes ago", program: "Emergency Medical Aid" },

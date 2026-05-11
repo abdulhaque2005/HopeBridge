@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import ImpactChart from "./impact-chart";
+import { TransparencyChart } from "@/components/transparency-chart";
 import { CheckCircle2, Users, Target, ShieldCheck, Globe, Award, TrendingUp, Heart } from "lucide-react";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
@@ -99,7 +100,7 @@ export default function AboutPage() {
             className="relative h-[500px] rounded-[3rem] overflow-hidden shadow-2xl group"
           >
             <img
-              src="https://images.unsplash.com/photo-1593113580332-ce288d6c94da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+              src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=1600&q=80"
               alt="Community working together"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
@@ -128,24 +129,37 @@ export default function AboutPage() {
               <Translate>We believe in complete financial transparency. Here&apos;s exactly how we use every rupee donated.</Translate>
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {transparencyStats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-background border border-border rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group"
-              >
-                <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
-                  <stat.icon className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-5xl font-bold font-heading text-primary mb-2">{stat.value}</h3>
-                <p className="font-bold text-foreground mb-1"><Translate>{stat.label}</Translate></p>
-                <p className="text-sm text-muted-foreground"><Translate>{stat.description}</Translate></p>
-              </motion.div>
-            ))}
+          <div className="grid lg:grid-cols-2 gap-12 items-center bg-background border border-border rounded-[3rem] p-8 md:p-12 shadow-2xl shadow-primary/5">
+            <div className="grid sm:grid-cols-1 gap-6">
+              {transparencyStats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-6 p-6 rounded-3xl bg-muted/30 border border-transparent hover:border-primary/20 hover:bg-background transition-all group"
+                >
+                  <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <stat.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <div>
+                    <div className="flex items-baseline gap-2">
+                      <h3 className="text-3xl font-bold font-heading text-primary">{stat.value}</h3>
+                      <p className="font-bold text-foreground"><Translate>{stat.label}</Translate></p>
+                    </div>
+                    <p className="text-sm text-muted-foreground"><Translate>{stat.description}</Translate></p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <div className="relative">
+              <TransparencyChart />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                <p className="text-4xl font-bold font-heading text-primary">100%</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground"><Translate>Accounted</Translate></p>
+              </div>
+            </div>
           </div>
         </div>
         {}
@@ -161,6 +175,7 @@ export default function AboutPage() {
               { year: "2022", title: "Education Expansion", description: "Launched the rural education program reaching 3,200+ students across Bihar and Uttar Pradesh." },
               { year: "2024", title: "Global Recognition", description: "Expanded operations to 5 countries. Recognized by the UN for excellence in community-driven development." },
               { year: "2025", title: "₹4 Crore Milestone", description: "Crossed ₹4 Crore in total funds raised with 12,000+ active donors and 850+ volunteers worldwide." },
+              { year: "2026", title: "Vision 2026", description: "Reaching 100,000+ lives with a focus on climate resilience and sustainable agricultural programs for rural farmers." },
             ].map((item, i) => (
               <motion.div
                 key={i}

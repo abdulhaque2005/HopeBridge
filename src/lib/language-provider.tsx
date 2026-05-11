@@ -34,11 +34,21 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const currentLanguageConfig = LANGUAGES.find(l => l.code === language) || LANGUAGES[0];
   const dir = currentLanguageConfig.dir;
   const t = useCallback((key: string, fallback?: string) => {
-    const translation = COMMON_TRANSLATIONS[language]?.[key] || 
-                        COMMON_TRANSLATIONS[DEFAULT_LANGUAGE]?.[key] || 
-                        fallback || 
-                        key;
-    return translation;
+    const langTable = COMMON_TRANSLATIONS[language];
+    if (langTable) {
+      if (langTable[key]) return langTable[key];
+      const foundKey = Object.keys(langTable).find(k => k.toLowerCase() === key.toLowerCase());
+      if (foundKey) return langTable[foundKey];
+    }
+    
+    const defTable = COMMON_TRANSLATIONS[DEFAULT_LANGUAGE];
+    if (defTable) {
+      if (defTable[key]) return defTable[key];
+      const foundKey = Object.keys(defTable).find(k => k.toLowerCase() === key.toLowerCase());
+      if (foundKey) return defTable[foundKey];
+    }
+
+    return fallback || key;
   }, [language]);
   useEffect(() => {
     if (mounted) {

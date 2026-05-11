@@ -62,7 +62,7 @@ export default function FeaturedPrograms() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[400px]">
            <div className="animate-pulse flex flex-col items-center gap-4 text-primary">
               <Activity className="w-12 h-12 animate-spin" />
-              <span className="font-bold text-xl tracking-widest uppercase">Syncing with Live Disaster DB...</span>
+              <span className="font-bold text-xl tracking-widest uppercase"><Translate>Syncing with Live Disaster DB...</Translate></span>
            </div>
         </div>
       </section>
@@ -85,13 +85,13 @@ export default function FeaturedPrograms() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600" />
               </span>
-              LIVE: Government & NGO Verified Crises
+              <Translate>LIVE: Government & NGO Verified Crises</Translate>
             </motion.div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 tracking-tight">
               <Translate>Urgent</Translate> <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500"><Translate>Missions</Translate></span>
             </h2>
             <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-              <Translate>Real-time data fetched from official disaster relief APIs. Your contribution can make an immediate impact where it's needed most.</Translate>
+              <Translate>Real-time data fetched from official disaster relief APIs. Your contribution can make an immediate impact where it&apos;s needed most.</Translate>
             </p>
           </div>
           <Button variant="outline" size="lg" className="rounded-full shadow-sm hover:shadow-md transition-all h-14 px-8 text-base" render={<Link href="/programs" />}>
@@ -130,13 +130,13 @@ export default function FeaturedPrograms() {
                       </Badge>
                       {program.urgent && (
                         <Badge className="bg-red-500 animate-pulse text-white hover:bg-red-600 shadow-lg border-none px-3 py-1 font-bold">
-                          URGENT
+                          <Translate>URGENT</Translate>
                         </Badge>
                       )}
                     </div>
                     <div className="absolute bottom-4 left-5 right-5 z-20 flex items-center gap-2 text-white/90 text-xs font-bold uppercase tracking-wider">
                       <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                      Verified by: {program.verifiedBy}
+                      <Translate>Verified by:</Translate> {program.verifiedBy && <Translate>{program.verifiedBy}</Translate>}
                     </div>
                   </div>
                   <CardHeader className="flex-1 px-8 pt-8 pb-4 relative">

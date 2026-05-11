@@ -87,12 +87,19 @@ export default function DonateForm() {
     (amount >= 5000
       ? "Creates massive community impact"
       : "Helps provide essential support");
-  const onSubmit = async () => {
-    setStep(3);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setShowConfetti(true);
-    setIsSuccess(true);
+  const onSubmit = async (data: z.infer<typeof donationSchema>) => {
+    setStep(3); // Show loading spinner
+    
+    // Guaranteed Demo Mode:
+    // Since we don't have a real Razorpay backend with Order IDs, 
+    // the official Razorpay script will hang. For the hackathon/demo,
+    // we simulate a secure 1.5 second processing delay, then show success.
+    setTimeout(() => {
+      setShowConfetti(true);
+      setIsSuccess(true);
+    }, 1500);
   };
+  
   if (isSuccess) {
     return (
       <motion.div

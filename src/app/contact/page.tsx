@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Translate } from "@/components/translate";
 import { useLanguage } from "@/lib/language-provider";
+import { GoogleMap } from "@/components/google-map";
 function FacebookIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -54,17 +55,17 @@ export default function ContactPage() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold font-heading mb-4"
+            className="text-4xl md:text-6xl font-bold font-heading mb-6"
           >
-            <Translate>Get in</Translate> <span className="text-primary"><Translate>Touch</Translate></span>
+            <Translate>Connect With Our</Translate> <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500"><Translate>Mission</Translate></span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-muted-foreground"
+            className="text-lg md:text-xl text-muted-foreground leading-relaxed"
           >
-            <Translate>Have questions about our programs, volunteering, or donations? Our team is here to help you make a difference.</Translate>
+            <Translate>Your support and inquiries drive our impact. Whether you want to volunteer, donate, or simply learn more, our dedicated team is ready to assist you in creating lasting change.</Translate>
           </motion.p>
         </div>
         <div className="grid lg:grid-cols-5 gap-12">
@@ -85,7 +86,7 @@ export default function ContactPage() {
                   <div>
                     <p className="font-bold text-lg"><Translate>Headquarters</Translate></p>
                     <p className="text-primary-foreground/80 leading-relaxed font-medium">
-                      <Translate>123 Hope Avenue, Impact City, 10012, India</Translate>
+                      <Translate>Udyog Vihar Phase IV, Gurugram, Haryana 122015, India</Translate>
                     </p>
                   </div>
                 </div>
@@ -117,17 +118,11 @@ export default function ContactPage() {
               </div>
             </div>
             {}
-            <div className="h-56 bg-background rounded-[2.5rem] overflow-hidden relative border border-border shadow-lg group">
-               <img 
-                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                 alt="Map location" 
-                 className="w-full h-full object-cover opacity-60 grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
+            <div className="h-96 md:h-[500px] bg-background rounded-[2.5rem] overflow-hidden relative border border-border shadow-2xl group">
+               <GoogleMap 
+                 address="Udyog Vihar Phase IV, Gurugram, Haryana 122015, India"
+                 embedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.2233913188217!2d77.0594348763131!3d28.502909675735165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1964f796695b%3A0xc095c10486b72a0!2sUdyog%20Vihar%2C%20Gurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1715355000000!5m2!1sen!2sin"
                />
-               <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
-                 <Button variant="secondary" className="rounded-full font-bold shadow-xl flex items-center gap-2 hover:scale-105 transition-transform">
-                   <MapPin className="w-4 h-4 text-primary" /> <Translate>View on Google Maps</Translate>
-                 </Button>
-               </div>
             </div>
           </motion.div>
           {}

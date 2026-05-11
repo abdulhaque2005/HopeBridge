@@ -94,7 +94,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm">
               <li className="flex gap-3 text-muted-foreground">
                 <MapPin className="h-5 w-5 shrink-0 text-primary" />
-                <span><Translate>123 Hope Avenue, Impact City, 10012, India</Translate></span>
+                <span><Translate>Udyog Vihar Phase IV, Gurugram, Haryana 122015, India</Translate></span>
               </li>
               <li className="flex gap-3 text-muted-foreground">
                 <Phone className="h-5 w-5 shrink-0 text-primary" />

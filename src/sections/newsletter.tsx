@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckCircle2, Mail, Sparkles } from "lucide-react";
 import { Translate } from "@/components/translate";
+import { useLanguage } from "@/lib/language-provider";
 export default function Newsletter() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
@@ -53,7 +55,7 @@ export default function Newsletter() {
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("Enter your email")}
                   className="pl-12 h-14 rounded-full bg-background text-base"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

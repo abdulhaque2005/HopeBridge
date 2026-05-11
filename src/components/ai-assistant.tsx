@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Sparkles, HeartHandshake, BrainCircuit, Zap } from "lucide-react";
+import { X, Send, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/language-provider";
 import { Translate } from "./translate";
@@ -16,39 +16,64 @@ type Message = {
 
 const knowledgeBase = {
   en: {
-    hello: "Welcome to HopeBridge! I am your AI Impact Assistant. I can help you explore our current missions, understand how your donations are utilized, or find opportunities to join our community. What can I help you with today?",
-    impact: "Your generosity fuels real transformation. For example, a donation of $10 provides clean drinking water for a child for a month. $50 can provide a complete school kit for two children, and $500 can sponsor a local entrepreneur. Every cent counts toward building a sustainable future.",
-    urgent: "Our most critical mission right now is the 'Education For All' initiative in rural regions, where we are setting up 15 new digital learning centers. We are currently at 75% of our goal and need urgent support.",
-    transparency: "HopeBridge is committed to 100% transparency. 90% of your funds go straight to the field programs, and 10% supports our logistics. You can find detailed impact reports on our 'Impact' page.",
+    hello: "Welcome to HopeBridge! I am your Hope AI. I can help you explore our current missions, understand how your donations are utilized, or find opportunities to join our community. What can I help you with today?",
+    impact: "Your generosity fuels real transformation. For example, a donation of ₹500 provides clean drinking water and a healthy meal for a child for a month. ₹2000 can provide a complete digital learning kit for rural students. Every rupee counts toward building a sustainable future.",
+    urgent: "Our most critical missions right now are the 'Flood Relief Fund' (for Assam & Bihar) and the 'Rural Education Initiative 2026'. We are currently scaling our operations and need your urgent support.",
+    transparency: "HopeBridge is committed to 100% transparency. 90% of your funds go straight to the field programs, and 10% supports our logistics and ground operations. You can find detailed impact reports on our 'About' page.",
     volunteer: "We are always looking for passionate individuals! Currently, we have open spots for 'Remote Mentors' and 'Ground Support'. You can sign up on our Contact page.",
-    story: "Meet Rahul, a 12-year-old who dreamed of becoming an engineer. Through our 'Hope Scholarship', he received the books and tuition he needed. Today, he is the top student in his district.",
-    default: "That's a great question. At HopeBridge, we believe in collective action. Whether you are looking for data on our transparency or want to hear success stories, I'm here to provide all the details."
+    story: "Meet Amina, a 12-year-old from a flood-affected village. Through our 'Hope Scholarship', she received the books and tuition she needed. Today, she is the top student in her district and dreams of becoming a doctor.",
+    about: "HopeBridge was founded in 2019 with a vision to bridge the gap between resources and those who need them most. We focus on education, healthcare, and emergency relief.",
+    contact: "You can reach us at hello@hopebridge.org, or visit our office in Udyog Vihar, Gurugram. Our team is available 24/7 for urgent inquiries.",
+    greeting: "Hello there! I'm Hope AI. How can I assist you in your mission to help others today?",
+    default: "That's an interesting question. At HopeBridge, we focus on real impact and transparency. Could you please specify if you'd like to know about our programs, how to donate, or see our success stories?",
+    donation_process: "Donating is simple! Just click the 'Donate Now' button in the menu. We accept UPI, Credit/Debit cards, and Net Banking. All donations are secure and tax-exempt.",
   },
   hi: {
-    hello: "HopeBridge में आपका स्वागत है! मैं आपका AI इम्पैक्ट असिस्टेंट हूँ। मैं आपको हमारे वर्तमान मिशनों को समझने, आपके दान के उपयोग को जानने या हमारे समुदाय से जुड़ने के तरीके खोजने में मदद कर सकता हूँ।",
-    impact: "आपकी उदारता वास्तविक परिवर्तन लाती है। उदाहरण के लिए, $10 का दान एक महीने के लिए एक बच्चे को पीने का साफ पानी प्रदान करता है। $50 दो बच्चों के लिए स्कूल किट प्रदान कर सकता है।",
-    urgent: "अभी हमारा सबसे महत्वपूर्ण मिशन ग्रामीण क्षेत्रों में 'सभी के लिए शिक्षा' पहल है। हम 15 नए डिजिटल शिक्षण केंद्र स्थापित कर रहे हैं। हमें आपके तत्काल समर्थन की आवश्यकता है।",
-    transparency: "HopeBridge 100% पारदर्शिता के लिए प्रतिबद्ध है। आपके फंड का 90% सीधे कार्यक्रमों में जाता है। आप हमारे 'इम्पैक्ट' पेज पर विस्तृत रिपोर्ट देख सकते हैं।",
-    volunteer: "हमें उत्साही व्यक्तियों की तलाश है! वर्तमान में हमारे पास 'रिमोट मेंटर्स' और 'ग्राउंड सपोर्ट' के लिए जगह खाली है। आप हमारे संपर्क पेज पर साइन अप कर सकते हैं।",
-    story: "राहुल से मिलें, एक 12 वर्षीय बच्चा जो इंजीनियर बनने का सपना देखता था। हमारी 'आशा छात्रवृत्ति' के माध्यम से, उसे किताबें और ट्यूशन मिला। आज वह अपने जिले का शीर्ष छात्र है।",
-    default: "यह एक अच्छा सवाल है। HopeBridge में, हम सामूहिक कार्रवाई में विश्वास करते हैं। चाहे आप हमारी पारदर्शिता के बारे में जानना चाहते हों या सफलता की कहानियाँ सुनना चाहते हों, मैं यहाँ हूँ।"
+    hello: "HopeBridge में आपका स्वागत है! मैं आपका 'होप AI' सेवा सहायक हूँ। मैं आपको हमारे मिशनों, दान के उपयोग और सेवा कार्यों के बारे में बता सकता हूँ।",
+    impact: "आपकी उदारता से बड़ा बदलाव आता है। उदाहरण के लिए, ₹500 से एक बच्चे को महीने भर का भोजन मिलता है, और ₹2000 से ग्रामीण बच्चों के लिए डिजिटल लैब किટ मिलती है।",
+    urgent: "अभी सबसे जरूरी 'बाढ़ राहत कोष' (असम और बिहार के लिए) और 'ग्रामीण शिक्षा' मिशन हैं। हमें आपकी तत्काल मदद की जरूरत है।",
+    transparency: "हम 100% पारदर्शिता में विश्वास करते हैं। आपके दान का 90% सीधे ग्राउंड पर सेवा में लगता है। आप हमारे 'About' पेज पर ऑडिट रिपोर्ट्स देख सकते हैं।",
+    volunteer: "हम हमेशा नए सेवादारों का स्वागत करते हैं! आप 'रिमोट मेंटर' या 'ग्राउंड सपोर्ट' के रूप में जुड़ सकते हैं। हमारे Contact पेज पर फॉर्म भरें।",
+    story: "अमीना की कहानी देखें, जिसने बाढ़ में सब खो दिया था, लेकिन आपके दान की बदौलत आज वो स्कूल में टॉप कर रही है और डॉक्टर बनना चाहती है।",
+    about: "होपब्रिज 2019 में शुरू हुआ था। हमारा लक्ष्य हर जरूरतमंद तक शिक्षा, स्वास्थ्य और भोजन पहुँचाना है।",
+    contact: "आप हमें hello@hopebridge.org पर ईमेल कर सकते हैं या हमारे गुरुग्राम कार्यालय में आ सकते हैं।",
+    greeting: "नमस्ते! मैं 'होप AI' हूँ। आज मैं आपकी सेवा में क्या मदद कर सकता हूँ?",
+    default: "क्षमा करें, क्या आप इसे थोड़ा स्पष्ट कर सकते हैं? मैं आपको हमारे सेवा कार्यों, दान देने की प्रक्रिया या इम्पैक्ट रिपोर्ट्स के बारे में बता सकता हूँ।",
+    donation_process: "दान देना बहुत आसान है! मेनू में 'दान करें' बटन पर क्लिक करें। आप UPI, कार्ड या नेट बैंकिंग से सुरक्षित दान दे सकते हैं।",
   },
   ur: {
-    hello: "HopeBridge میں خوش آمدید! میں آپ کا AI امپیکٹ اسسٹنٹ ہوں۔ میں آپ کو ہمارے موجودہ مشنوں کو سمجھنے، آپ کے عطیات کے استعمال کو جاننے یا ہماری کمیونٹی میں شامل ہونے کے طریقے تلاش کرنے میں مدد کر سکتا ہوں۔",
-    impact: "آپ کی سخاوت حقیقی تبدیلی لاتی ہے۔ مثال کے طور پر، $10 کا عطیہ ایک ماہ کے لیے ایک بچے کو پینے کا صاف پانی فراہم کرتا ہے۔ $50 دو بچوں کے لیے اسکول کٹ فراہم کر سکتا ہے۔",
-    urgent: "ابھی ہمارا سب سے اہم مشن دیہی علاقوں میں 'سب کے لیے تعلیم' کی پہل ہے۔ ہم 15 نئے ڈیجیٹل لرننگ سینٹرز قائم کر رہے ہیں۔ ہمیں آپ کی فوری مدد کی ضرورت ہے۔",
-    transparency: "HopeBridge 100% شفافیت کے لیے پرعزم ہے۔ آپ کے فنڈز کا 90% براہ راست پروگراموں میں جاتا ہے۔ آپ ہمارے 'امپیکٹ' پیج پر تفصیلی رپورٹ دیکھ سکتے ہیں۔",
-    volunteer: "ہمیں پرجوش افراد کی تلاش ہے! فی الحال ہمارے پاس 'ریموٹ مینٹرز' اور 'گراؤنڈ سپورٹ' کے لیے آسامیاں خالی ہیں۔ آپ ہمارے رابطہ پیج پر سائن اپ کر سکتے ہیں۔",
-    story: "راہول سے ملیں، ایک 12 سالہ بچہ جو انجینئر بننے کا خواب دیکھتا تھا۔ ہماری 'امید اسکالرشپ' کے ذریعے، اسے کتابیں اور ٹیوشن ملی۔ آج وہ اپنے ضلع کا ٹاپ طالب علم ہے۔",
-    default: "یہ ایک اچھا سوال ہے۔ HopeBridge میں، ہم اجتماعی کارروائی پر یقین رکھتے ہیں۔ میں یہاں تمام تفصیلات فراہم کرنے کے لیے موجود ہوں۔"
+    hello: "HopeBridge میں خوش آمدید! میں آپ کا 'ہوپ AI' خدمت گار ہوں۔ میں آپ کو ہمارے مشن، عطیات اور فلاحی کاموں کے بارے میں بتا سکتا ہوں۔",
+    impact: "آپ کی سخاوت بڑی تبدیلی لاتی ہے۔ مثلاً ₹500 سے ایک بچے کو مہینے بھر کا کھانا ملتا ہے، اور ₹2000 سے دیہی بچوں کے لیے تعلیمی کٹ ملتی ہے۔",
+    urgent: "ابھی سب سے ضروری 'سیلاب ریلیف فنڈ' اور 'دیہی تعلیم' کے مشن ہیں۔ ہمیں آپ کی فوری مدد کی ضرورت ہے۔",
+    transparency: "ہم 100% شفافیت پر یقین رکھتے ہیں۔ آپ کے عطیہ کا 90% براہ راست گراؤنڈ پر کام میں لگتا ہے۔",
+    volunteer: "ہم ہمیشہ نئے رضاکاروں کا خیرمقدم کرتے ہیں! آپ ہمارے رابطہ پیج پر فارم بھر کر ہم سے جڑ سکتے ہیں۔",
+    story: "امینہ کی کہانی دیکھیں، جس نے سیلاب میں سب کچھ کھو دیا تھا، لیکن آج وہ اسکول میں ٹاپ کر رہی ہے۔",
+    about: "ہوپ برج 2019 میں شروع ہوا تھا۔ ہمارا مقصد ہر ضرورت مند تک تعلیم، صحت اور خوراک پہنچانا ہے۔",
+    contact: "آپ ہمیں hello@hopebridge.org پر ای میل کر سکتے ہیں۔ ہماری ٹیم آپ کی مدد کے لیے حاضر ہے۔",
+    greeting: "اسلام علیکم! میں 'ہوپ AI' ہوں۔ آج میں آپ کی کیا مدد کر سکتا ہوں؟",
+    default: "معذرت، کیا آپ تھوڑی وضاحت کر سکتے ہیں؟ میں آپ کو ہمارے فلاحی کاموں یا عطیہ کے طریقہ کار کے بارے میں بتا سکتا ہوں۔",
+    donation_process: "عطیہ دینا بہت آسان ہے! 'عطیہ کریں' بٹن پر کلک کریں۔ آپ UPI یا کارڈ کے ذریعے محفوظ عطیہ دے سکتے ہیں۔",
+  },
+  gu: {
+    hello: "HopeBridge માં આપનું સ્વાગત છે! હું તમારો 'હોપ AI' સેવા સહાયક છું. હું તમને અમારા મિશન, દાનના ઉપયોગ અને સેવા કાર્યો વિશે જણાવી શકું છું.",
+    impact: "તમારી ઉદારતા મોટો બદલાવ લાવે છે. ઉદાહરણ તરીકે, ₹500 થી એક બાળકને મહિનાનું ભોજન મળે છે, અને ₹2000 થી ગ્રામીણ બાળકો માટે શિક્ષણ કિટ મળે છે.",
+    urgent: "અત્યારે સૌથી મહત્વના 'પૂર રાહત ભંડોળ' અને 'ગ્રામીણ શિક્ષણ' મિશન છે. અમને તમારી તાત્કાલિક મદદની જરૂર છે.",
+    transparency: "અમે 100% પારદર્શિતામાં માનીએ છીએ. તમારા દાનનો 90% સીધો ગ્રાઉન્ડ પર સેવા માટે વપરાય છે.",
+    volunteer: "અમે હંમેશા નવા સ્વયંસેવકોનું સ્વાગત કરીએ છીએ! તમે અમારા સંપર્ક પેજ પર ફોર્મ ભરીને અમારી સાથે જોડાઈ શકો છો.",
+    story: "અમીનાની વાર્તા જુઓ, જેણે પૂર માં બધું ગુમાવ્યું હતું, પરંતુ આજે તે શાળામાં ટોપ કરી રહી છે.",
+    about: "હોપબ્રિજ 2019 માં શરૂ થયું હતું. અમારો ધ્યેય દરેક જરૂરિયાતમંદ સુધી શિક્ષણ અને આરોગ્ય પહોંચાડવાનો છે.",
+    contact: "તમે અમને hello@hopebridge.org પર ઈમેલ કરી શકો છો. અમારી ટીમ તમારી સહાય માટે તૈયાર છે.",
+    greeting: "નમસ્તે! હું 'હોપ AI' છું. આજે હું તમને કેવી રીતે મદદ કરી શકું?",
+    default: "ક્ષમા કરશો, શું તમે આ થોડું સ્પષ્ટ કરી શકશો? હું તમને અમારા સેવા કાર્યો અથવા દાનની પ્રક્રિયા વિશે જણાવી શકું છું.",
+    donation_process: "દાન આપવું ખૂબ જ સરળ છે! મેનુમાં 'અત્યારે દાન કરો' બટન પર ક્લિક કરો. તમે UPI અથવા કાર્ડથી સુરક્ષિત દાન આપી શકો છો.",
   }
 };
 
 const SUGGESTED_QUESTIONS = [
   { key: "impact", text: "How is my money spent?" },
   { key: "urgent", text: "Current urgent missions?" },
-  { key: "transparency", text: "Is my donation safe?" },
-  { key: "story", text: "Share a success story" },
+  { key: "donate", text: "How can I donate?" },
+  { key: "contact", text: "How can I contact you?" },
 ];
 
 export function AiAssistant() {
@@ -60,70 +85,79 @@ export function AiAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      const lang = (language as "en" | "hi" | "ur") || "en";
+    if (isOpen) {
+      const lang = (language as "en" | "hi" | "ur" | "gu") || "en";
+      const kb = (knowledgeBase as any)[lang] || knowledgeBase.en;
       setMessages([
         {
           id: "msg-0",
           role: "assistant",
-          content: knowledgeBase[lang].hello,
+          content: kb.hello,
           timestamp: new Date(),
         }
       ]);
     }
-  }, [isOpen, language, messages.length]);
+  }, [isOpen, language]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const processResponse = (userInput: string) => {
-    const lang = (language as "en" | "hi" | "ur") || "en";
-    const lowerInput = userInput.toLowerCase();
-    let responseText = knowledgeBase[lang].default;
+  const handleSend = async (text: string) => {
+    if (!text.trim()) return;
 
-    if (lowerInput.includes("impact") || lowerInput.includes("spend") || lowerInput.includes("money") || lowerInput.includes("donate") || lowerInput.includes("paisa") || lowerInput.includes("mali")) {
-      responseText = knowledgeBase[lang].impact;
-    } else if (lowerInput.includes("urgent") || lowerInput.includes("campaign") || lowerInput.includes("now") || lowerInput.includes("current") || lowerInput.includes("fauri")) {
-      responseText = knowledgeBase[lang].urgent;
-    } else if (lowerInput.includes("transparent") || lowerInput.includes("safe") || lowerInput.includes("trust") || lowerInput.includes("verify") || lowerInput.includes("bharosa")) {
-      responseText = knowledgeBase[lang].transparency;
-    } else if (lowerInput.includes("volunteer") || lowerInput.includes("join") || lowerInput.includes("help") || lowerInput.includes("work") || lowerInput.includes("madad")) {
-      responseText = knowledgeBase[lang].volunteer;
-    } else if (lowerInput.includes("story") || lowerInput.includes("success") || lowerInput.includes("example") || lowerInput.includes("kahani")) {
-      responseText = knowledgeBase[lang].story;
-    }
+    const newUserMessage: Message = {
+      id: `msg-${Date.now()}`,
+      role: "user",
+      content: text,
+      timestamp: new Date(),
+    };
 
-    setTimeout(() => {
+    setMessages((prev) => [...prev, newUserMessage]);
+    setInput("");
+    setIsTyping(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, newUserMessage].slice(-10).map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to get response");
+      }
+      
       setMessages((prev) => [
         ...prev,
         {
           id: `msg-${Date.now()}`,
           role: "assistant",
-          content: responseText,
+          content: data.message,
           timestamp: new Date(),
         },
       ]);
+    } catch (error: any) {
+      console.error("Chat error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `msg-${Date.now()}`,
+          role: "assistant",
+          content: error.message || "Sorry, I'm having trouble connecting right now. Please try again later.",
+          timestamp: new Date(),
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 1200 + Math.random() * 800); 
-  };
-
-  const handleSend = (text: string) => {
-    if (!text.trim()) return;
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: `msg-${Date.now()}`,
-        role: "user",
-        content: text,
-        timestamp: new Date(),
-      },
-    ]);
-    
-    setInput("");
-    setIsTyping(true);
-    processResponse(text);
+    }
   };
 
   return (
@@ -131,14 +165,17 @@ export function AiAssistant() {
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
+        transition={{ type: "spring", stiffness: 200, damping: 15, delay: 1 }}
+        whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 text-white shadow-[0_10px_40px_-10px_rgba(16,185,129,0.5)] flex items-center justify-center transition-all ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : ''}`}
+        className={`fixed bottom-6 right-6 z-50 w-[68px] h-[68px] rounded-full bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 text-white shadow-[0_8px_30px_-4px_rgba(16,185,129,0.6)] flex items-center justify-center transition-all duration-300 ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : ''}`}
       >
-        <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse" />
-        <img src="/images/help.png" alt="Hope AI" className="w-10 h-10 relative z-10 object-contain" />
-        <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950" />
+        {/* Pulsing ring animation */}
+        <span className="absolute inset-0 rounded-full bg-emerald-400/40 animate-ping" />
+        <span className="absolute inset-[-4px] rounded-full border-2 border-emerald-400/30 animate-pulse" />
+        <img src="/images/help.png" alt="Hope AI" className="w-10 h-10 relative z-10 object-contain drop-shadow-lg" />
+        <div className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950 z-20" />
       </motion.button>
 
       <AnimatePresence>

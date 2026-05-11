@@ -1,6 +1,55 @@
 import { NextResponse } from 'next/server';
 export async function GET() {
-  const realTimePrograms = [
+  try {
+    // Using REAL NGO API from the United Nations (ReliefWeb)
+    // This fetches the latest real-world humanitarian disasters globally.
+    const res = await fetch('https://api.reliefweb.int/v1/disasters?appname=hopebridge&profile=full&limit=6&sort=date:desc', {
+      headers: { 'Accept': 'application/json' },
+      next: { revalidate: 3600 } // Cache for 1 hour
+    });
+
+    if (res.ok) {
+      const apiData = await res.json();
+      
+      const realTimePrograms = apiData.data.map((item: any, index: number) => {
+        const fields = item.fields;
+        
+        // ReliefWeb doesn't provide direct images always, so we match categories with dynamic images
+        const typeName = fields.primary_type?.name || "Emergency";
+        const isUrgent = fields.status === 'alert' || fields.status === 'ongoing';
+        
+        let imageUrl = `https://source.unsplash.com/1600x900/?${encodeURIComponent(typeName.toLowerCase() + " relief")}`;
+        // Fallback robust images
+        const robustImages = [
+          "/images/disaster-relief.png",
+          "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+          "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+          "/images/village-development.png",
+          "/images/Women Empowerment Initiative.png",
+          "/images/Rural Food Distribution.png"
+        ];
+
+        return {
+          id: `rw-${fields.id}`,
+          title: fields.name,
+          description: fields.description || `Ongoing humanitarian response for the ${fields.name} crisis. Your donations provide immediate on-ground relief.`,
+          category: typeName,
+          image: robustImages[index % robustImages.length],
+          raised: Math.floor(Math.random() * 5000000) + 1000000, // Simulated financial data
+          goal: Math.floor(Math.random() * 10000000) + 6000000,
+          verifiedBy: "UN ReliefWeb",
+          urgent: isUrgent
+        };
+      });
+
+      return NextResponse.json(realTimePrograms);
+    }
+  } catch (error) {
+    console.error("ReliefWeb API Error:", error);
+  }
+
+  // Fallback to local data if the API is unreachable (e.g., offline demo)
+  const fallbackPrograms = [
     {
       id: "api-gov-1",
       title: "National Flood Relief Fund (Assam & Bihar)",
@@ -68,5 +117,5 @@ export async function GET() {
       urgent: true
     }
   ];
-  return NextResponse.json(realTimePrograms);
+  return NextResponse.json(fallbackPrograms);
 }
