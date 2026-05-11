@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic'; // Bust cache to fix 404s immediately
+
 export async function GET() {
   const validIds = [
     "education-for-all",
