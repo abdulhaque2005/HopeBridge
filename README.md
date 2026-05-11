@@ -2,6 +2,8 @@
 
 ![HopeBridge Banner](https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80)
 
+### 🟢 Live Demo: [https://hopebridge-jet.vercel.app](https://hopebridge-jet.vercel.app)
+
 **HopeBridge** is a premium, high-impact, and fully responsive platform designed to connect generous donors with urgent disaster relief and community welfare programs. Built as a next-generation NGO portal, it focuses on extreme transparency, real-time verified data, and highly aggressive, conversion-optimized UI/UX to drive immediate donations.
 
 ---
